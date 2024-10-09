@@ -10,7 +10,15 @@ class CartController extends Controller
     public function showCart()
     {
         $cart = DB::table('carts')->get();
-        return view('cart', compact('cart'));
+
+        $cartProducts = DB::table('carts')
+            ->join('products', 'carts.product_id', '=', 'products.id')
+            ->select('carts.*', 'products.image', 'products.product_name', 'products.price')
+            ->get();
+
+
+        $products = DB::table('products')->get();
         // return response()->json($cart);
+        return view('cart', compact('cart', 'products', 'cartProducts'));
     }
 }
