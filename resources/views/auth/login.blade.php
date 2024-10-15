@@ -1,4 +1,5 @@
 <x-guest-layout>
+    
     <div class="flex flex-col items-center justify-center min-h-screen bg-white">
 
         <!-- Login Form -->
@@ -25,6 +26,8 @@
                         Login
                     </button>
                 </div>
+
+
 
                 <!-- Register Link -->
                 <div class="text-center mt-4">
