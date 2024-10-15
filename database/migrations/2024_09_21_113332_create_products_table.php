@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description'); 
             $table->integer('price',);
             $table->integer('quantity');
-            $table->string('image'); 
+            $table->string('image'); // For storing image paths
 
             // Foreign key constraint
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

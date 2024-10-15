@@ -11,19 +11,20 @@ class ProductController extends Controller
     // Function to show the product page
     public function showProductPage($id)
     {
+        // Fetch the product from the database
         $product = Product::find($id);
 
+        // Check if the product exists
         if (!$product) {
-            return redirect()->back()->with('error', 'Product not found.');
+            // Instead of redirecting, you can return a custom error view or message
+            return view('errors.product_not_found');
         }
 
-        
+        // Product exists, so render the product page
         return view('product.show', compact('product'));
     }
-    public function getAllProducts()
-    {
-        $products = Product::all();
-        return view('product.index', compact('products'));
-    }
-
 }
+
+    
+   
+
