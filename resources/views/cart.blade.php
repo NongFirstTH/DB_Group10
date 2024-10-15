@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="mystyle.css">
+</head>
+
+
 <style>
 .table_component {
   overflow: auto;
@@ -33,6 +41,7 @@
   padding: 5px;
 }
 </style>
+
 <div class="table_component" role="region" tabindex="0">
   <table>
     <caption>
@@ -63,3 +72,5 @@
     </tbody>
 
   </table><button class="w3-button w3-green">Checkout</button>
+
+</html>

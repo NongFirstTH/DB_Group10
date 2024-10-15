@@ -14,10 +14,23 @@ class Cart extends Model
     protected $fillable = [
         'user_id',
         'product_id',
-        'total_amount',
+        'price_per_item',
         'quantity',
+        'total_amount',
     ];
-        
+
+    protected static function booted()
+    {
+        static::creating(function ($cart) {
+            $cart->total_amount = $cart->price_per_item * $cart->quantity;
+        });
+
+        static::updating(function ($cart) {
+            $cart->total_amount = $cart->price_per_item * $cart->quantity;
+        });
+
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

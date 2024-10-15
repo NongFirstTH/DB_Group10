@@ -13,7 +13,7 @@ class CartController extends Controller
 
         $cartProducts = DB::table('carts')
             ->join('products', 'carts.product_id', '=', 'products.id')
-            ->select('carts.*', 'products.image', 'products.product_name', 'products.price')
+            ->select('carts.*', 'products.image', 'products.product_name', 'products.price')->where('carts.user_id', 1)
             ->get();
 
 
