@@ -7,4 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/HomePage', [HomePageController::class,'showHomePage'])->name('homepage.index');
+Route::get('/homepage', [HomePageController::class,'showCategory'])->name('homepage.index');
+Route::get('/homepage/{id}', [HomePageController::class, 'getProduct'])->name('homepage.show-product');
+

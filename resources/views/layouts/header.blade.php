@@ -16,10 +16,7 @@
 </style>
     <!-- <body class="bg-gradient-to-b from-orange-200 to-red-300 bg-no-repeat"> -->
     <body class="flex flex-col min-h-screen">
-        <div class="">
-            <div class="">
-                <div class="">
-                <header class="">
+                <header>
                 @include("layouts.navigation") 
-                    </header>
-                    <main>
+                </header>
+                    <main class="flex-grow">

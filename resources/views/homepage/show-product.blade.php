@@ -1,0 +1,36 @@
+@extends("layouts.layout")
+@include("homepage.show-category")
+
+<div class="flex justify-center">
+    <svg width="1293" height="5" viewBox="0 0 1293 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path opacity="0.8" d="M0 3L1293 1" stroke="black"/>
+    </svg>
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 mb-10 mt-20 mr-8 ml-8">
+
+    @if ($products->isEmpty())
+    <p>No products found.</p>
+    @else
+    @foreach ($products as $product)
+        <div class="border-gray-100 border-2 rounded-3xl shadow-md flex flex-col items-center bg-white">
+
+            <div class="mb-4 mt-4">
+                <img src={{ $product->image }} class="w-52 h-52 rounded-lg object-cover">
+            </div>
+
+            <div class="text-wrap text-center font-bold">
+                <p>{{$product -> product_name}}</p>
+            </div>
+
+            <div class="flex items-center space-x-4 mb-4 mt-4">
+                <div>
+                    <p>{{$product -> price}} bath</p>
+                </div>
+            </div>
+
+        </div>
+    @endforeach
+    @endif
+
+</div>
