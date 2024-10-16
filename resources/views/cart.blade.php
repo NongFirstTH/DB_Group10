@@ -45,7 +45,7 @@
 <div class="table_component" role="region" tabindex="0">
   <table>
     <caption>
-      <p>Your Cart have {{$cartProducts->count()}} items</p>
+      <p>Username: {{$user_name}} | Your Cart have {{$cartProducts->count()}} items</p>
     </caption>
     <thead>
       <tr>
