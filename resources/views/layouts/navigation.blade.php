@@ -3,16 +3,9 @@
     
     <!-- Logo (Left) -->
     <div class="flex items-center">
-      <img src="https://cdn.dribbble.com/users/1296676/screenshots/6942574/media/a112f8f10da4463d1030264a25f78eea.jpg" alt="Logo" class="h-10">
-      <span class="ml-3 text-2xl font-semibold dark:text-white">SHOGGY</span>
+      <img src="https://cdn.dribbble.com/users/1296676/screenshots/6942574/media/a112f8f10da4463d1030264a25f78eea.jpg" class="h-10">
+      <a href="{{url('/homepage')}}" class="ml-3 text-2xl font-semibold dark:text-white">SHOGGY</a>
     </div>
-    
-    <!-- HomePage Link (Middle) -->
-    <!-- <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
-        <x-nav-link :href="route('homepage.index')" :active="request()->routeIs('homepage.index')">
-                            {{ __('HomePage') }}
-        </x-nav-link>
-    </div> -->
     
     <!-- Buttons (Right) -->
     <div class="flex space-x-4">

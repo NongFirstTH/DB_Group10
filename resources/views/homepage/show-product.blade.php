@@ -13,8 +13,7 @@
     <p>No products found.</p>
     @else
     @foreach ($products as $product)
-        <div class="border-gray-100 border-2 rounded-3xl shadow-md flex flex-col items-center bg-white">
-
+        <a href="{{route('product.show', $product -> id) }}" class="transform transition duration-300 hover:scale-105 border-gray-100 border-2 rounded-3xl shadow-md flex flex-col items-center bg-white">
             <div class="mb-4 mt-4">
                 <img src={{ $product->image }} class="w-52 h-52 rounded-lg object-cover">
             </div>
@@ -29,7 +28,7 @@
                 </div>
             </div>
 
-        </div>
+        </a>
     @endforeach
     @endif
 

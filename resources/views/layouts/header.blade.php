@@ -14,8 +14,10 @@
 <style>
 
 </style>
-    <!-- <body class="bg-gradient-to-b from-orange-200 to-red-300 bg-no-repeat"> -->
-    <body class="flex flex-col min-h-screen">
+<!-- class="flex flex-col min-h-screen bg-gradient-to-t from-blue-200 to-cyan-300 bg-no-repeat" -->
+<body 
+class="flex flex-col min-h-screen"
+    >
                 <header>
                 @include("layouts.navigation") 
                 </header>
