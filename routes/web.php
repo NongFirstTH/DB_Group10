@@ -20,9 +20,9 @@ Route::get('/profile', function () {
 })->middleware(['auth', 'verified'])->name('profile.show-profile');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/editProfile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/editProfile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/editProfile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/Profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/Profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/Profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     // Route::get('/profile/bio', [UserController::class, 'showBio'])->name('profile.show-bio');
     // Route::patch('/profile/bio', [UserController::class, 'updateBio'])->name('profile.update-bio');
