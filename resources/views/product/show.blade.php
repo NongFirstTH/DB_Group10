@@ -12,7 +12,7 @@
                     
                     <!-- Product Image -->
                     <div class="w-1/2">
-                    <img src="{{ asset('storage/images/products/' . $product->image) }}" alt="{{ $product->name }}">
+                    <img src="{{  $product->image }}" alt="{{ $product->name }}">
 
 
                     </div>
