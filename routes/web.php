@@ -11,3 +11,7 @@ Route::get('/', function () {
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 
 Route::get('/HomePage', [HomePageController::class, 'showHomePage'])->name('homepage.index');
+
+Route::get('/test', [CartController::class, 'showTest'], function () {
+    return view('test');
+});

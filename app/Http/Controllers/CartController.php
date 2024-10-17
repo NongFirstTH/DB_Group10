@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -39,6 +38,9 @@ class CartController extends Controller
         return view('cart', compact('cart', 'products', 'cartProducts', 'user_name'));
     }
 
-
+    public function showTest()
+    {
+        return view('test');
+    }
 
 }
