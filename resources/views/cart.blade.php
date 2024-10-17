@@ -1,11 +1,13 @@
-<!doctype html>
-<html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   @vite('resources/css/app.css')
 </head>
+<!-- <x-slot name="header">
+  <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    {{ __('My Orders') }}
+  </h2>
+</x-slot> -->
 
 <body>
   <section class="py-24 relative">
@@ -39,12 +41,13 @@
             <p class="font-normal text-lg leading-8 text-gray-500 my-2 min-[550px]:my-3 max-[550px]:text-center">
               {{$item->category_name}}
             </p>
-            <h6 class="font-medium text-lg leading-8 text-orange-600  max-[550px]:text-center">${{$item->price}}.00</h6>
+            <h6 class="font-medium text-lg leading-8 text-orange-600  max-[550px]:text-center">฿{{$item->price}}.00
+            </h6>
           </div>
         </div>
         <div class="flex items-center flex-col min-[550px]:flex-row w-full max-xl:max-w-xl max-xl:mx-auto gap-2">
           <!-- <h6 class="font-manrope font-bold text-2xl leading-9 text-black w-full max-w-[176px] text-center">
-      $15.00 <span class="text-sm text-gray-300 ml-3 lg:hidden whitespace-nowrap">(Delivery
+      ฿15.00 <span class="text-sm text-gray-300 ml-3 lg:hidden whitespace-nowrap">(Delivery
       Charge)</span></h6> -->
           <div class="flex items-center w-full mx-auto justify-center">
             <button
@@ -72,27 +75,32 @@
             </button>
           </div>
           <h6 class="text-orange-600 font-manrope font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
-            ${{$item->total_amount}}.00</h6>
+            ฿{{$item->total_amount}}.00</h6>
         </div>
       </div>
       <!-- End For Each Item -->
       @endforeach
 
-
+      @if($cartProducts->count() == 0)
+      <div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+        <p class="font-bold">Your Cart is Empty</p>
+        <p class="text-sm">Go buy something !</p>
+      </div>
+      @else
       <!-- Total Section -->
       <div class="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
         <div class="flex items-center justify-between w-full mb-6">
           <p class="font-normal text-xl leading-8 text-gray-400">Sub Total</p>
-          <h6 class="font-semibold text-xl leading-8 text-gray-900">${{$subtotal}}.00
+          <h6 class="font-semibold text-xl leading-8 text-gray-900">฿{{$subtotal}}.00
           </h6>
         </div>
         <div class="flex items-center justify-between w-full pb-6 border-b border-gray-200">
           <p class="font-normal text-xl leading-8 text-gray-400">Discount</p>
-          <h6 class="font-semibold text-xl leading-8 text-gray-900">$0.00</h6>
+          <h6 class="font-semibold text-xl leading-8 text-gray-900">฿0.00</h6>
         </div>
         <div class="flex items-center justify-between w-full py-6">
           <p class="font-manrope font-medium text-2xl leading-9 text-gray-900">Total</p>
-          <h6 class="font-manrope font-medium text-2xl leading-9 text-orange-500">${{$subtotal}}.00</h6>
+          <h6 class="font-manrope font-medium text-2xl leading-9 text-orange-500">฿{{$subtotal}}.00</h6>
         </div>
       </div>
       <div class="flex items-center flex-col sm:flex-row justify-center gap-3 mt-8">
@@ -113,8 +121,7 @@
         </button>
       </div>
       <!-- End Total Section -->
+      @endif
     </div>
   </section>
 </body>
-
-</html>

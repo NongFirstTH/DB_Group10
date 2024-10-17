@@ -11,7 +11,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $table = 'Order';
+    protected $table = 'orders';
 
     protected $fillable = [
         'user_id',
@@ -20,7 +20,7 @@ class Order extends Model
         'discount'
     ];
 
-    
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
