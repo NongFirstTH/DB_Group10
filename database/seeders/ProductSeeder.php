@@ -143,51 +143,51 @@ class ProductSeeder extends Seeder
             ],
             [
                 'category_id' => 3,
-                'product_name' => 'Ancol Degradable Dog Poo Bags',
-                'description' => 'Biodegradable, 60 bags, 4 rolls, tie handles',
+                'product_name' => 'Johnsons Eye & Ear Pet Wipes 30pk',
+                'description' => 'Specially formulated for eyes and ears of dogs, cats and small animals. Safe ,Gentle ,Hygienic and PH balanced wipes.',
                 'price' => 165,
                 'quantity' => 80,
-                'image' => 'https://petsplus.ie/wp-content/uploads/2022/09/80231-1-768x576.jpg'
+                'image' => 'https://petsplus.ie/wp-content/uploads/2020/06/C044-1-Clean-n-Safe-Eye-Ear-Wipes-768x768.jpeg'
             ],
             [
                 'category_id' => 3,
-                'product_name' => 'Pet Food Storage Bin 46L',
-                'description' => 'Keep your pet\'s food fresh with this plastic Pet food storage bin with clip lid suitable to store your pet’s food.',
-                'price' => 520,
+                'product_name' => 'Slicker Brush',
+                'description' => 'Dog brush slicker are excellent for getting rid of unwanted and dead hair. They must be used with care due to metal tips to prevent slicker burn.',
+                'price' => 300,
                 'quantity' => 175,
-                'image' => 'https://petsplus.ie/wp-content/uploads/2020/10/TOM-bidone-silver-PF70500.jpg'
+                'image' => 'https://petsplus.ie/wp-content/uploads/2019/06/743x515-434200-1.jpg'
             ],
             [
                 'category_id' => 3,
-                'product_name' => 'Universal Dog Seat Belt Restraint',
-                'description' => 'Keep your dog safe and secure whilst travelling. Can be used with harness, Securing your pup is now a requirement',
+                'product_name' => 'Ancol Baby Powder Dog Cologne – 100ml',
+                'description' => 'BB Cologne incorporates sweet floral smells for a luscious and comforting scent, ideal for cherished dogs.',
                 'price' => 245,
                 'quantity' => 130,
-                'image' => 'https://petsplus.ie/wp-content/uploads/2021/04/10-off-ancol-coats-768x576.png'
+                'image' => 'https://petsplus.ie/wp-content/uploads/2019/06/390170-1-768x768.jpeg'
             ],
             [
                 'category_id' => 3,
-                'product_name' => 'Nobby Dog Snuffle Mat',
-                'description' => 'Anti-slip, 100% polyester, 30°C machine wash, plastic plate keeps the mat stable while playing',
-                'price' => 980,
+                'product_name' => 'Dentifresh Veterinary Dog Toothbrush',
+                'description' => 'Soft bristles to protect the enamel on the pet’s teeth ,Easy and comfortable to use ,Suitable for dogs and cats.',
+                'price' => 90,
                 'quantity' => 100,
-                'image' => 'https://petsplus.ie/wp-content/uploads/2021/02/Images-83-768x576.png'
+                'image' => 'https://petsplus.ie/wp-content/uploads/2019/06/tootbrush-1-768x575.jpg'
             ],
             [
                 'category_id' => 3,
-                'product_name' => 'Poop Scooper',
-                'description' => 'Help for removing excrement, aluminium handle',
-                'price' => 735,
+                'product_name' => 'Dog Shedding Blade',
+                'description' => 'The ancol ergo shedding blade is perfect for de-shedding your dog to get rid of unwanted dead hairs.',
+                'price' => 435,
                 'quantity' => 120,
-                'image' => 'https://petsplus.ie/wp-content/uploads/2020/03/72754-768x584.jpg'
+                'image' => 'https://petsplus.ie/wp-content/uploads/2020/04/430100-1-768x768.jpg'
             ],
             [
                 'category_id' => 3,
-                'product_name' => 'Ergo Raised Bowl and Feeder 18cm',
-                'description' => 'The Ergo Feeder is a raised dog feeder and drinker which includes 2 removable stainless-steel bowls.',
-                'price' => 935,
+                'product_name' => 'Ancol Dog Nail Clipper',
+                'description' => 'Keeps dogs nails trimmed, ideal for indoor animals. Simplifies claw trimming Non-slip handle.',
+                'price' => 350,
                 'quantity' => 150,
-                'image' => 'https://petsplus.ie/wp-content/uploads/2019/03/ErgoFdr.jpeg'
+                'image' => 'https://petsplus.ie/wp-content/uploads/2019/06/nail-clippers.jpeg'
             ],
         ]);
     }

@@ -19,7 +19,7 @@
     </div>
 
     <!-- Button -->
-    <a href="{{url('/dashboardpage')}}" class="inline-block bg-orange-500 text-white font-bold pt-3 py-4 px-6 mt-5 rounded hover:bg-orange-600 transition text-center">
+    <a href="{{url('/homepage')}}" class="inline-block bg-orange-500 text-white font-bold pt-3 py-4 px-6 mt-5 rounded hover:bg-orange-600 transition text-center">
                             shop now
     </a>
 </div>
