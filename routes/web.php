@@ -15,16 +15,20 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/profile', function () {
+    return view('profile.show-profile');
+})->middleware(['auth', 'verified'])->name('profile.show-profile');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/Profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/Profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/Profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    
-    Route::get('/profile/bio', [UserController::class, 'showBio'])->name('profile.show-bio');
-    // Route to handle updating the bio
-    Route::patch('/profile/bio', [UserController::class, 'updateBio'])->name('profile.update-bio');
+    // Route::get('/profile/bio', [UserController::class, 'showBio'])->name('profile.show-bio');
+    // Route::patch('/profile/bio', [UserController::class, 'updateBio'])->name('profile.update-bio');
 
 });
+
+Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 
 require __DIR__.'/auth.php';
