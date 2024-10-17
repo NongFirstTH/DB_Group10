@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id'); // Foreign key to products table
             $table->integer('quantity');
             $table->integer('total_price');
-           
+            
 
             
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

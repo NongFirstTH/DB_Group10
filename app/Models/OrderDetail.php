@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class OrderDetail extends Model
 {
     use HasFactory;
-
-    protected $table = 'OrderDetail';
+    public $timestamps = false;
+    protected $table = 'order_details';
     protected $fillable = [ 
         'order_id',
         'product_id',
