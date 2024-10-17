@@ -1,20 +1,20 @@
 @extends("layouts.layout")
         <!-- Login Form -->
         <div class="w-full max-w-md mx-auto mt-32">
-            <h2 class="text-4xl font-['Ubuntu Sans Mono'] text-center mb-8">LOGIN</h2>
+            <h2 class="text-4xl text-center mb-8">LOGIN</h2>
             <form method="POST" action="{{ route('login') }}" class="space-y-6">
                 @csrf
 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block text-xl mb-1">Email</label>
-                    <input id="email" name="email" type="email" class="block w-full px-4 py-2 border rounded-md focus:border-gray-500 focus:ring focus:ring-gray-300 rounded-md" required>
+                <x-input-label for="email" :value="__('Email')" class="text-lg" />
+                    <input id="email" name="email" type="email" class="mt-1 block w-full border border-gray-300 p-2 rounded-md transition duration-200 ease-in-out focus:border-orange-500 focus:ring focus:ring-orange-500 hover:border-orange-500" required>
                 </div>
 
                 <!-- Password -->
                 <div>
-                    <label for="password" class="block text-xl mb-1">Password</label>
-                    <input id="password" name="password" type="password" class="block w-full px-4 py-2 border rounded-md focus:border-gray-500 focus:ring focus:ring-gray-300" required>
+                <x-input-label for="password" :value="__('Password')" class="text-lg" />
+                    <input id="password" name="password" type="password" class="mt-1 block w-full border border-gray-300 p-2 rounded-md transition duration-200 ease-in-out focus:border-orange-500 focus:ring focus:ring-orange-500 hover:border-orange-500" required>
                 </div>
 
                 <!-- Login Button -->

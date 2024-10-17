@@ -23,11 +23,9 @@
                             Price: ${{ number_format($product->price, 2) }}
                         </div>
 
-                        <div class="flex items-center mt-4 mb-6">
-                            <!-- Star Rating -->
-                            <div class="flex text-yellow-500">
-                                ★★★★☆
-                            </div>
+                        <!-- Stock Availability -->
+                        <div class="text-green-600 text-lg mt-2">
+                            In Stock: {{ $product->quantity }} units
                         </div>
 
                         <!-- Quantity Selector -->

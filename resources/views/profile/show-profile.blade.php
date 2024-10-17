@@ -13,13 +13,13 @@
                         <h3 class="text-2xl font-bold mb-2">{{ Auth::user()->username }}</h3>
                     </div>
                     <ul class="space-y-4">
-                        <li><a href="#" class="block hover:text-orange-600" onclick="showContent('accountOverview')">Account Overview</a></li>
-                        <li><a href="#" class="block hover:text-orange-600" onclick="showContent('myOrders')">My Orders</a></li>
-                        <li><a href="#" class="block hover:text-orange-600" onclick="showContent('changePassword')">Change Password</a></li>
+                        <li><a  class="cursor-pointer block hover:text-orange-600" onclick="showContent('accountOverview')">Account Overview</a></li>
+                        <li><a  class="cursor-pointer block hover:text-orange-600" onclick="showContent('myOrders')">My Orders</a></li>
+                        <li><a  class="cursor-pointer block hover:text-orange-600" onclick="showContent('changePassword')">Change Password</a></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}" id="logout-form" class="inline">
                                 @csrf
-                                <a href="#" class="block hover:text-orange-600" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a class="cursor-pointer block hover:text-orange-600" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Log Out') }}
                                 </a>
                             </form>

@@ -31,28 +31,4 @@ class UserController extends Controller
 
         return back()->with('status', 'Profile photo updated successfully!');
     }
-
-    // public function updateProfile(Request $request)
-    // {
-    //     $user = Auth::user();
-
-    //     // Validate the request
-    //     $request->validate([
-    //         'firstname' => 'required|string|max:255',
-    //         'lastname' => 'required|string|max:255',
-    //         'phone_number' => 'required|string|max:15', // Adjust max length as needed
-    //         'location' => 'required|string|max:255',
-    //     ]);
-
-    //     // Update the user's profile information
-    //     $user->firstname = $request->input('firstname');
-    //     $user->lastname = $request->input('lastname');
-    //     $user->phone_number = $request->input('phone_number');
-    //     $user->location = $request->input('location');
-
-    //     $user->save();
-
-    //     return redirect()->route('profile.edit')->with('status', 'Profile updated successfully!');
-    // }
-
 }
