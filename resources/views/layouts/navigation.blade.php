@@ -20,7 +20,7 @@
 
             <!-- Profile Icon -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <a href="{{ route('profile.show-profile') }}" class="flex items-center p-2 text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                <a href="{{ route('profile.show.profile') }}" class="flex items-center p-2 text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-4.418 0-8 2.686-8 6v2h16v-2c0-3.314-3.582-6-8-6zM12 12c2.209 0 4-1.791 4-4s-1.791-4-4-4-4 1.791-4 4 1.791 4 4 4z" />
                     </svg>
