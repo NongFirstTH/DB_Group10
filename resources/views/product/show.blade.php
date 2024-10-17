@@ -25,26 +25,61 @@
                         </div>
 
                         <div class="text-2xl font-semibold text-gray-900">
-                            Price: ${{ number_format($product->price, 2) }}
+                            Price: ฿{{ number_format($product->price, 2) }}
                         </div>
 
                         <!-- Stock Availability -->
-                        <div class="text-green-600 text-lg mt-2">
+                <div class="text-green-600 text-lg mt-2">
                             In Stock: {{ $product->quantity }} units
-                        </div>
-                        
-                        <!-- Quantity Selector -->
-                        <div class="mt-4">
-                            <label for="quantity" class="block font-medium text-gray-700">Quantity:</label>
-                            <input type="number" id="quantity" name="quantity" value="1" min="1" class="mt-1 block w-20 p-2 border border-gray-300 rounded-md">
-                        </div>
+                    </div>
 
-                        <!-- Add to Cart Button -->
-                        <div class="mt-6">
-                            <button class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900">
-                                Add to Cart
-                            </button>
-                        </div>
+<?php
+// สมมติว่า $product->quantity มาจากการดึงข้อมูลจากฐานข้อมูล
+$stock = $product->quantity;
+?>
+
+<!-- Add to Cart Button -->
+<div class="mt-6">
+     Quantity :
+    <form action="{{ route('cart.add') }}" method="POST">
+        @csrf
+        <input type="hidden" name="product_id" value="{{ $product->id }}">
+        <input type="hidden" name="price" value="{{ $product->price }}">
+        
+        <!-- ฟิลด์สำหรับเลือกจำนวนสินค้าที่ต้องการเพิ่มในตะกร้า -->
+        <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->quantity }}">
+
+        <button id="addToCartBtn" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900"
+            <?php echo $stock == 0 ? 'disabled' : ''; ?>>
+            Add to Cart
+        </button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stock = <?php echo $stock; ?>;
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        const quantityInput = document.getElementById('quantity');
+
+        // ตรวจสอบว่าจำนวนสินค้าหมดสต็อกหรือไม่ ถ้าหมดให้ปิดการใช้งานปุ่ม
+        if (stock === 0) {
+            addToCartBtn.disabled = true;
+            addToCartBtn.classList.add('cursor-not-allowed', 'opacity-50'); // เพิ่มสไตล์ปิดการใช้งานให้ชัดเจน
+        }
+
+        // ตรวจสอบจำนวนที่กรอกใน input
+        quantityInput.addEventListener('input', function (e) {
+            let value = parseInt(e.target.value);
+            if (isNaN(value) || value < 0) {
+                e.target.value = 0;
+            } else if (value > stock) {
+                e.target.value = stock;
+            }
+        });
+    });
+</script>
+
                     </div>
 
                 </div>
