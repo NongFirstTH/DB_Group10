@@ -8,19 +8,26 @@
             SHOGGY
         </a>
     </div>
-    
     <!-- Buttons (Right) -->
     <div class="flex space-x-4 items-center">
+    <?php
+        use App\Models\Cart;
+        if (Auth::user() != null)
+        $cartItem = Cart::where('user_id', Auth::user()->id)->first();
+    ?>
     @if (Auth::check())
         @auth
             <button class="text-black mr-4">
-                <!-- <span class="relative flex h-3 w-3 top-2 right-[-15]">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                </span> -->
-            <a href="{{ route('cart.cart') }}" class="text-black">
+            <a href="{{ route('cart.cart') }}" class="text-black relative inline-block">
                 <i class="bi bi-cart-fill" style="font-size: 1.5rem; color: black;"></i>
+            @if ($cartItem)
+                <span class="absolute top-0 right-0 w-3 h-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-50"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+            @endif
             </a>
+
             </button>
             <a href="{{ route('profile.show-profile') }}" class="text-black">
                 <i class="bi bi-person-circle" style="font-size: 1.5rem; color: black;"></i>

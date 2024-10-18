@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/product/{id}', [ProductController::class, 'showProductPage'])->name('product.show');
     Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
     Route::get('/cart', [CartController::class, 'showCart'])->name('cart.cart');
+    Route::post('/cart/add', [ProductController::class, 'addToCart'])->name('cart.add');
 });
 
 
