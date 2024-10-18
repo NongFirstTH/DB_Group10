@@ -23,4 +23,10 @@ class OrderController extends Controller
         return view('profile.show-order', compact('orders'));
         // return response()->json($orders); 
     }
+
+    public function confirmation()
+    {
+        return view('order.confirmation');  // Show confirmation message to user
+    }
+
 }

@@ -22,6 +22,8 @@ Route::get('/profile', function () {
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 Route::get('/test', [CartController::class, 'showTest'])->name('test');
 
+Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
+
 
 Route::middleware('auth')->group(function () {
     Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -34,6 +36,6 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 
-Route::post('/cart/add', [OrderController::class, 'cartToOrder'])->name('cart.add');
+Route::post('/checkout', [CartController::class, 'cartToOrder'])->name('cart.checkout');
 
 require __DIR__ . '/auth.php';

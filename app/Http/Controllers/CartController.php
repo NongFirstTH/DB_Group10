@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use App\Models\Cart;
 class CartController extends Controller
 {
     //
@@ -57,6 +58,8 @@ class CartController extends Controller
 
         $subtotal = $cartProducts->sum('total_amount');
 
+        Cart::where('user_id', $user->id)->delete();
+
         Order::create([
             'user_id' => $user->id,
             'total_amount' => $subtotal,
@@ -64,7 +67,7 @@ class CartController extends Controller
             'discount' => 0,
         ]);
 
-        return redirect()->route('profile.show-order');
+        return redirect()->route('order.confirmation')->with('success', 'Order has been placed successfully!');
     }
 
 
