@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('total_amount');
             $table->integer('payment');
             $table->integer('discount')->nullable(); // Discount can be null
-
+            $table->timestamps();
             // Foreign key constraint
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

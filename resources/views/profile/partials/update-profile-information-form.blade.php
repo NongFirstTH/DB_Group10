@@ -69,7 +69,7 @@
 
         <!-- Save and Manage Bio/Personality Button -->
         <div class="flex items-center gap-4 mt-6">
-            <x-primary-button class="text-white px-4 py-2 rounded-md transition duration-200 ease-in-out" style="background-color: #ED7D31;">
+            <x-primary-button class="text-white px-4 py-2 rounded-md bg-orange-600 hover:bg-orange-500">
                 {{ __('Save') }}
             </x-primary-button>
 

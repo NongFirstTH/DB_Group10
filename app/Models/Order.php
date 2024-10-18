@@ -11,7 +11,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $table = 'Order';
+    protected $table = 'orders';
 
     protected $fillable = [
         'user_id',
@@ -26,7 +26,7 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function order_detail(): HasMany
+    public function order_details(): HasMany
     {
         return $this->hasMany(OrderDetail::class);
     }
