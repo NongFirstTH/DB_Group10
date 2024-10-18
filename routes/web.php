@@ -36,6 +36,6 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
 
-Route::post('/checkout', [CartController::class, 'cartToOrder'])->name('cart.checkout');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 require __DIR__ . '/auth.php';

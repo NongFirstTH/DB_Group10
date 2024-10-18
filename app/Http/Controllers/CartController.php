@@ -37,9 +37,13 @@ class CartController extends Controller
         return view('cart', compact('cart', 'products', 'cartProducts', 'subtotal'));
     }
 
-    public function cartToOrder(Request $request)
+    public function checkout(Request $request)
     {
         $user = Auth::user();
+
+        // $request->validate([
+        //     'total_amount' => 'required|numeric',
+        // ]);
 
         $cartProducts = DB::table('carts')
             ->join('products', 'carts.product_id', '=', 'products.id')
@@ -58,6 +62,16 @@ class CartController extends Controller
             ->get();
 
         $subtotal = $cartProducts->sum('total_amount');
+
+        // $subtotalAmount = $request->total_amount;
+
+        // $discount = 0;
+
+        // if ($subtotalAmount > 1000) {
+        //     $discount = 0.1 * $subtotalAmount;
+        // }
+
+        // $totalAmount = $subtotalAmount - $discount;
 
         // Remove the current cart
         Cart::where('user_id', $user->id)->delete();
