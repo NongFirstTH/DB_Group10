@@ -20,7 +20,7 @@
                         </div>
 
                         <div class="text-2xl font-semibold text-gray-900">
-                            Price: ${{ number_format($product->price, 2) }}
+                            Price: ฿{{ number_format($product->price, 2) }}
                         </div>
 
                         <!-- Stock Availability -->
@@ -31,7 +31,7 @@
                         <!-- Quantity Selector -->
                         <div class="mt-4">
                             <label for="quantity" class="block font-medium text-gray-700">Quantity:</label>
-                            <input type="number" id="quantity" name="quantity" value="1" min="1" class="mt-1 block w-20 p-2 border border-gray-300 rounded-md">
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" class="mt-1 block w-20 p-2 focus:border-orange-500 focus:ring focus:ring-orange-500 hover:border-orange-500 border border-gray-300 rounded-md">
                         </div>
 
                         <!-- Add to Cart Button -->
@@ -40,6 +40,7 @@
                                 Add to Cart
                             </button>
                         </div>
+                        
                     </div>
 
                 </div>
