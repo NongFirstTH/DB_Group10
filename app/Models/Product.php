@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Product extends Model {
+class Product extends Model
+{
     use HasFactory;
-    protected $table = 'Product';
+    protected $table = 'products';
     protected $fillable = [
         'category_id',
         'product_name',
@@ -19,13 +20,14 @@ class Product extends Model {
         'image'
     ];
 
-    public function category(): BelongsTo {
-        return $this->belongsTo(Category::class,'category_id');
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function order_detail(): HasMany
     {
         return $this->hasMany(OrderDetail::class);
     }
-   
+
 }

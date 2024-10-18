@@ -14,9 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id'); // Foreign key to users table
             $table->unsignedBigInteger('product_id'); // Foreign key to products table
-            $table->unsignedBigInteger('price_per_item');
             $table->integer('quantity');
-            $table->integer('total_amount')->default(0);
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

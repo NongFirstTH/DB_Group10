@@ -59,7 +59,7 @@
 
               <!-- Order Details Section (Toggled) -->
               <ul class="mt-4 space-y-2" x-show="showDetails" x-collapse>
-                @foreach ($order->orderDetails as $detail)
+                @foreach ($order->order_detail as $detail)
                 <li class="flex justify-between bg-gray-100 p-4 rounded-md shadow-sm">
                   <div class="flex items-center space-x-4">
                     <!-- Product Image -->

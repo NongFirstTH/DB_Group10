@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\OrderDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,14 +59,31 @@ class CartController extends Controller
 
         $subtotal = $cartProducts->sum('total_amount');
 
+        // Remove the current cart
         Cart::where('user_id', $user->id)->delete();
 
+        // Create a new order
         Order::create([
             'user_id' => $user->id,
             'total_amount' => $subtotal,
             'payment' => $subtotal,
             'discount' => 0,
         ]);
+
+        // Get the latest order id
+        $order_id = Order::latest()->first()->id;
+
+        // Insert the cart products into the order details table
+        foreach ($cartProducts as $cartProduct) {
+            $total_price = $cartProduct->price * $cartProduct->quantity;
+            OrderDetail::create([
+                'order_id' => $order_id,
+                'product_id' => $cartProduct->product_id,
+                'quantity' => $cartProduct->quantity,
+                'total_price' => $total_price,
+            ]);
+        }
+
 
         return redirect()->route('order.confirmation')->with('success', 'Order has been placed successfully!');
     }

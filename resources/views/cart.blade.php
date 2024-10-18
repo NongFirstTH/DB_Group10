@@ -50,6 +50,8 @@
       ฿15.00 <span class="text-sm text-gray-300 ml-3 lg:hidden whitespace-nowrap">(Delivery
       Charge)</span></h6> -->
           <div class="flex items-center w-full mx-auto justify-center">
+
+            <!-- Minus Button -->
             <button
               class="group rounded-l-full px-6 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-300 hover:bg-gray-50">
               <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
@@ -59,9 +61,13 @@
                 <path d="M16.5 11H5.5" stroke="" stroke-opacity="0.2" stroke-width="1.6" stroke-linecap="round" />
               </svg>
             </button>
+
+            <!-- Quantity Number -->
             <input type="text"
               class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[118px] min-w-[80px] placeholder:text-gray-900 py-[15px] text-center bg-transparent"
               placeholder={{$item->quantity}}>
+
+            <!-- Plus Button -->
             <button
               class="group rounded-r-full px-6 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:border-gray-300 hover:bg-gray-50">
               <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"

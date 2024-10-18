@@ -15,7 +15,7 @@ class OrderController extends Controller
         // $user = Auth::user();
         // $orders = Order::all();
         // // $orders = Order::where('user_id', Auth::user()->id)->get();
-        $orders = Order::with('orderDetails')->where('user_id', Auth::id())->get();
+        $orders = Order::with('order_detail')->where('user_id', Auth::id())->get();
 
         // dd($orders);
         // Log::info('User Orders:', $orders->toArray());
