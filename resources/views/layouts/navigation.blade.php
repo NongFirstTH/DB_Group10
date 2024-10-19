@@ -4,7 +4,7 @@
     <!-- Logo (Left) -->
     <div class="flex items-center">
         <img src="https://cdn.dribbble.com/users/1296676/screenshots/6942574/media/a112f8f10da4463d1030264a25f78eea.jpg" class="h-10">
-        <a href="{{url('/homepage')}}" class="ml-3 text-2xl font-semibold dark:text-white">
+        <a href="{{url('/category')}}" class="ml-3 text-2xl font-semibold dark:text-white">
             SHOGGY
         </a>
     </div>

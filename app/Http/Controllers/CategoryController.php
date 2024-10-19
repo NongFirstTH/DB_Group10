@@ -10,7 +10,7 @@ class CategoryController extends Controller
         $categories = DB::table('categories')
             ->get();
 
-        return view('homepage.index', compact('categories'));
+        return view('category.index', compact('categories'));
         // return response()->json( $categories );
     }
 
@@ -25,6 +25,6 @@ class CategoryController extends Controller
             ->where('category_id', $category_id->id)
             ->get();
 
-        return view('homepage.show-product', compact('products'));
+        return view('category.show-product', compact('products'));
     }
 }

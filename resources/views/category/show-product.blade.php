@@ -1,5 +1,5 @@
 @extends("layouts.layout")
-@include("homepage.show-category")
+@include("category.show-category")
 
 <div class="flex justify-center">
     <svg width="1293" height="5" viewBox="0 0 1293 4" fill="none" xmlns="http://www.w3.org/2000/svg">

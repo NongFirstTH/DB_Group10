@@ -12,8 +12,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/homepage', [CategoryController::class,'showCategory'])->name('homepage.index');
-Route::get('/category/{category_name}', [CategoryController::class, 'getProduct'])->name('homepage.show-product');
+Route::get('/category', [CategoryController::class,'showCategory'])->name('category.index');
+Route::get('/category/{category_name}', [CategoryController::class, 'getProduct'])->name('category.show-product');
 
 Route::get('/profile', function () {
     return view('profile.show-profile');
