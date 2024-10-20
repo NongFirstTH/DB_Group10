@@ -40,21 +40,27 @@ $stock = $product->quantity;
 
 <!-- Add to Cart Button -->
 <div class="mt-6">
-     Quantity :
+    Quantity:
     <form action="{{ route('cart.add') }}" method="POST">
         @csrf
         <input type="hidden" name="product_id" value="{{ $product->id }}">
         <input type="hidden" name="price" value="{{ $product->price }}">
         
         <!-- ฟิลด์สำหรับเลือกจำนวนสินค้าที่ต้องการเพิ่มในตะกร้า -->
-        <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->quantity }}">
+        <input type="number" name="quantity" id="quantity" value="0" min="0" max="{{ $product->quantity }}" 
+    class="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
 
-        <button id="addToCartBtn" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900"
+
+        <!-- Button positioned below the quantity field -->
+        <div class="mt-2">
+        <button id="addToCartBtn" class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 mt-4"
             <?php echo $stock == 0 ? 'disabled' : ''; ?>>
             Add to Cart
         </button>
+        </div>
     </form>
 </div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
