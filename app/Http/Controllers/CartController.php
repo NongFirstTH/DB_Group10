@@ -54,36 +54,6 @@ class CartController extends Controller
       'totalAmount' => 'required|numeric'
     ]);
 
-    // $subtotal= $validatedData['id'];
-    // Log::info('Checkout request received', $request->all()); // Debug request data
-
-    // $validatedData = $request->validate([
-    //   'total' => 'required|numeric',
-    //   'subtotal' => 'required|numeric',
-    //   'discount' => 'required|numeric',
-    // ]);
-
-    // Log::info('Validated data:', $validatedData); // Check validated data
-
-    // return response()->json([
-    //   'message' => 'Checkout successful!',
-    //   'data' => $validatedData
-    // ]);
-
-    // $validatedData = $request->validate([
-    //   'total' => 'required|numeric',
-    //   'subtotal' => 'required|numeric',
-    //   'discount' => 'required|numeric',
-    // ]);
-
-
-    // $subtotal = $validatedData['subtotal'];
-    // $discount = $validatedData['discount'];
-    // $total = $validatedData['total'];
-
-    // $subtotal = $request->subtotal;
-    // $discount = $request->discount;
-
     $cartProducts = DB::table('carts')
       ->join('products', 'carts.product_id', '=', 'products.id')
       ->join('users', 'carts.user_id', '=', 'users.id')
@@ -106,22 +76,22 @@ class CartController extends Controller
     $subtotal = 0;
     $total = 0;
     // Handle zero value when nothing change
-    if ($validatedData['subtotalAmount'] != 0) {
-      $subtotal = $validatedData['subtotalAmount'];
-      $discount = $validatedData['discountAmount'];
-      $total = $validatedData['totalAmount'];
-    } else {
-      $subtotal = $cartProducts->sum('total_amount');
-      if ($subtotal > 1000) {
-        $discount = 0.1 * $subtotal;
-        $total = $subtotal - $discount;
-      }
-    }
+    // if ($validatedData['subtotalAmount'] != 0) {
+    //   $subtotal = $validatedData['subtotalAmount'];
+    //   $discount = $validatedData['discountAmount'];
+    //   $total = $validatedData['totalAmount'];
+    // } else {
+    //   $subtotal = $cartProducts->sum('total_amount');
+    //   if ($subtotal > 1000) {
+    //     $discount = 0.1 * $subtotal;
+    //     $total = $subtotal - $discount;
+    //   }
+    // }
 
 
-    // $subtotal = $validatedData['subtotalAmount'];
-    // $discount = $validatedData['discountAmount'];
-    // $total = $validatedData['totalAmount'];
+    $subtotal = $validatedData['subtotalAmount'];
+    $discount = $validatedData['discountAmount'];
+    $total = $validatedData['totalAmount'];
 
     Cart::where('user_id', $user->id)->delete();
 

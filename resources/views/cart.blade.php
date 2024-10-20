@@ -136,9 +136,9 @@
   <script>
   $(document).ready(function() {
     // Function to update total price
-    let subtotal = 0;
-    let discount = 0;
-    let total = 0;
+    let subtotal = @json($subtotal);
+    let discount = @json($discount);
+    let total = @json($subtotal) - @json($discount);
 
     function updateTotal() {
       subtotal = 0;
@@ -173,19 +173,6 @@
       updateTotal(); // Update total
     }
 
-    // $('.quantity-input').on('keydown', function() {
-    //   alert("changed!");
-    //   let quantityInput = $(this);
-    //   let currentQuantity = parseInt(quantityInput.val(), 10);
-
-    //   if (isNaN(newQuantity) || newQuantity < 0) {
-
-    //     newQuantity = 0;
-    //   }
-    //   updateRow($(this).closest('.grid'), currentQuantity);
-    //   updateTotal();
-    // });
-
     // Increase quantity button
     $('.increase-quantity').on('click', function() {
       let quantityInput = $(this).siblings('.quantity-input');
@@ -212,8 +199,6 @@
       }
     });
 
-    var data = [];
-    data += subtotal;
 
     $('#checkout-button').on('click', function(e) {
       e.preventDefault();
