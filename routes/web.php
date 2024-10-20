@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
     Route::get('/cart', [CartController::class, 'showCart'])->name('cart.cart');
     Route::post('/cart/add', [ProductController::class, 'addToCart'])->name('cart.add');
+    Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 
 

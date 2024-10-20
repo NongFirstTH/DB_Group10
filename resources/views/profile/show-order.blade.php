@@ -38,7 +38,7 @@
                 @else
                     <ul class="space-y-4">
                         @foreach ($orders as $order)
-                            <li class="border border-gray-200 rounded-md shadow-sm p-4" x-data="{ showDetails: false }">
+                            <li class="hover:bg-gray-50 border border-gray-200 rounded-md shadow-sm p-4" x-data="{ showDetails: false }">
                                 <div class="flex justify-between items-center cursor-pointer"
                                     @click="showDetails = !showDetails">
                                     <div>
@@ -47,9 +47,9 @@
                                     </div>
                                     <div class="text-right">
                                         <span class="text-green-700 font-medium">Total Paid:
-                                            ${{ number_format($order->payment, 2) }}</span>
+                                            ฿{{ number_format($order->payment, 2) }}</span>
                                         <span class="ml-4 text-red-600 font-medium">Discount:
-                                            ${{ number_format($order->discount, 2) }}</span>
+                                            ฿{{ number_format($order->discount, 2) }}</span>
                                         <span class="ml-4 text-orange-600 font-semibold">View Details</span>
                                     </div>
                                 </div>
@@ -65,14 +65,14 @@
                                                     class="w-16 h-16 object-cover rounded-lg">
 
                                                 <div>
-                                                    <span class="block font-semibold text-gray-800">Product ID:
-                                                        {{ $detail->product_id }}</span>
+                                                    <span class="block font-semibold text-gray-800">
+                                                        {{ $detail->product->product_name}}</span>
                                                     <span>Quantity: {{ $detail->quantity }}</span>
                                                 </div>
                                             </div>
                                             <div class="text-right">
                                                 <span class="block font-semibold text-gray-700">Price:
-                                                    ${{ number_format($detail->total_price, 2) }}</span>
+                                                    ฿{{ number_format($detail->total_price, 2) }}</span>
                                             </div>
                                         </li>
                                     @endforeach
