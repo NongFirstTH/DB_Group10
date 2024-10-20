@@ -21,10 +21,11 @@ class CategoryController extends Controller
             ->select('id')
             ->first();
 
-        $products = DB::table('products')
-            ->where('category_id', $category_id->id)
-            ->get();
+        if ($category_id->id != null)
+            $products = DB::table('products')
+                ->where('category_id', $category_id->id)
+                ->get();
 
-        return view('category.show-product', compact('products'));
+            return view('category.show-product', compact('products'));
     }
 }
