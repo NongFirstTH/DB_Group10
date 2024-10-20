@@ -34,7 +34,12 @@ class CartController extends Controller
         $subtotal = $cartProducts->sum('total_amount');
         $products = DB::table('products')->get();
 
-        return view('cart.cart', compact('cart', 'products', 'cartProducts', 'subtotal'));
+        $discount = 0;
+        if ($subtotal > 1000) {
+            $discount = 0.1 * $subtotal;
+        }
+
+        return view('cart.cart', compact('cart', 'products', 'cartProducts', 'subtotal', 'discount'));
     }
 
     public function checkout(Request $request)
@@ -63,6 +68,11 @@ class CartController extends Controller
 
         $subtotal = $cartProducts->sum('total_amount');
 
+        $discount = 0;
+        if ($subtotal > 1000) {
+            $discount = 0.1 * $subtotal;
+        }
+
         // $subtotalAmount = $request->total_amount;
 
         // $discount = 0;
@@ -80,8 +90,8 @@ class CartController extends Controller
         Order::create([
             'user_id' => $user->id,
             'total_amount' => $subtotal,
-            'payment' => $subtotal,
-            'discount' => 0,
+            'payment' => $subtotal - $discount,
+            'discount' => $discount,
         ]);
 
         // Get the latest order id
@@ -104,7 +114,7 @@ class CartController extends Controller
             $new_quantity = $product->quantity - $cartProduct->quantity;
             DB::table('products')->where('id', $cartProduct->product_id)->update(['quantity' => $new_quantity]);
         }
-               
-        return redirect()->route('order.confirmation')->with('success', 'Order has been placed successfully!');
+
+        return redirect()->route('cart.cart')->with('success', 'Order has been placed successfully!');
     }
 }
