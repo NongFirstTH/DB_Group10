@@ -1,6 +1,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   @vite('resources/css/app.css')
 </head>
 <!-- <x-slot name="header">
@@ -114,22 +116,24 @@
         </div>
       </div>
       <div class="flex items-center flex-col sm:flex-row justify-center gap-3 mt-8">
-        <!-- Checkout button -->
-        <button type="button" id="checkout-button"
-          class="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-orange-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-orange-700">Checkout
-          <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-            <path d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998" stroke="white" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
+
+        <form id="checkout-button">
+          <!-- Checkout button -->
+          <button type="submit"
+            class="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-orange-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-orange-700">Checkout
+            <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
+              <path d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998" stroke="white" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </form>
       </div>
 
       <!-- End Total Section -->
       @endif
     </div>
 
-    @yield('content')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
     $(document).ready(function() {
       // Function to update total price
@@ -188,7 +192,7 @@
       });
 
       // Checkout button click handler
-      $('#checkout-button').on('click', function(event) {
+      $('#checkout-button').on('submit', function(event) {
         event.preventDefault(); // Prevent the form from submitting
 
         // Calculate the total amount right before checkout
