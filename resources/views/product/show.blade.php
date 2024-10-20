@@ -48,7 +48,9 @@ $stock = $product->quantity;
         
         <!-- ฟิลด์สำหรับเลือกจำนวนสินค้าที่ต้องการเพิ่มในตะกร้า -->
         <input type="number" name="quantity" id="quantity" value="0" min="0" max="{{ $product->quantity }}" 
-    class="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+    class="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+    oninput="this.value = this.value.replace(/^0+/, '')">
+
 
 
         <!-- Button positioned below the quantity field -->
