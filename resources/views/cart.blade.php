@@ -1,7 +1,8 @@
+<html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   @vite('resources/css/app.css')
 </head>
@@ -26,8 +27,6 @@
           <span class="w-full max-w-[200px] text-center">Total</span>
         </p>
       </div>
-
-
 
       @foreach ($cartProducts as $item)
       <!-- For Each Item -->
@@ -65,7 +64,7 @@
             <!-- Quantity Number -->
             <input type="text"
               class="quantity-input border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[118px] min-w-[80px] placeholder:text-gray-900 py-[15px] text-center bg-transparent"
-              min="1" max="100" value={{$item->quantity}} placeholder={{$item->quantity}}>
+              min="1" max="100" value={{$item->quantity}} placeholder={{$item->quantity}} readonly>
 
             <!-- Plus Button -->
             <button
@@ -95,8 +94,8 @@
         <p class="text-sm">Go buy something !</p>
       </div>
       @else
-      <!-- Total Section -->
 
+      <!-- Total Section -->
       <div class=" bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
         <div class="flex items-center justify-between w-full mb-6">
           <p class="font-normal text-xl leading-8 text-gray-400">Sub Total</p>
@@ -117,121 +116,128 @@
       </div>
       <div class="flex items-center flex-col sm:flex-row justify-center gap-3 mt-8">
 
-        <form id="checkout-button">
-          <!-- Checkout button -->
-          <button type="submit"
-            class="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-orange-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-orange-700">Checkout
-            <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-              <path d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998" stroke="white" stroke-width="1.6"
-                stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
-        </form>
+        <!-- Checkout button -->
+        <button id="checkout-button" type="submit"
+          class="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-orange-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-orange-700">Checkout
+          <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
+            <path d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998" stroke="white" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
       </div>
 
       <!-- End Total Section -->
       @endif
     </div>
+  </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function() {
+    // Function to update total price
+    let subtotal = 0;
+    let discount = 0;
+    let total = 0;
 
-
-    <script>
-    $(document).ready(function() {
-      // Function to update total price
-      function updateTotal() {
-        let subtotal = 0;
-        $('.subtotal').each(function() {
-          let subtotalText = $(this).text().replace('฿', '').trim();
-          let subtotalValue = parseFloat(subtotalText); // Convert to float
-          if (!isNaN(subtotalValue)) {
-            subtotal += subtotalValue; // Add only valid numbers
-          }
-        });
-
-        let discount = 0; // Calculate discount here
-        let total = subtotal;
-        if (subtotal > 1000) {
-          discount = 0.1 * subtotal;
-          total = subtotal - discount;
+    function updateTotal() {
+      subtotal = 0;
+      $('.subtotal').each(function() {
+        let subtotalText = $(this).text().replace('฿', '').trim();
+        let subtotalValue = parseFloat(subtotalText); // Convert to float
+        if (!isNaN(subtotalValue)) {
+          subtotal += subtotalValue; // Add only valid numbers
         }
-
-        $('.subtotal-price').text('฿' + subtotal.toFixed(2)); // Update displayed total price
-        $('.discount-price').text('฿' + discount.toFixed(2)); // Update displayed total price
-        $('.total-price').text('฿' + total.toFixed(2)); // Update displayed total price
+      });
+      discount = 0; // Calculate discount here
+      total = subtotal;
+      if (subtotal > 1000) {
+        discount = 0.1 * subtotal;
+        total = subtotal - discount;
       }
+      $('.subtotal-price').text('฿' + subtotal.toFixed(2)); // Update displayed total price
+      $('.discount-price').text('฿' + discount.toFixed(2)); // Update displayed total price
+      $('.total-price').text('฿' + total.toFixed(2)); // Update displayed total price
+    }
 
-      // Function to update row subtotal and total
-      function updateRow(row, newQuantity) {
-        let priceText = row.find('.pro-data h6').text(); // Get price text
-        let price = parseFloat(priceText.replace(/฿|,/g, '')); // Convert to float
-        if (isNaN(price)) {
-          console.error("Price is not a valid number:", priceText); // Log error if price is invalid
-          return; // Exit if price is not valid
-        }
-        let subtotal = price * newQuantity; // Calculate subtotal
-        row.find('.subtotal').text('฿' + subtotal.toFixed(2)); // Update subtotal
-        updateTotal(); // Update total
+    // Function to update row subtotal and total
+    function updateRow(row, newQuantity) {
+      let priceText = row.find('.pro-data h6').text(); // Get price text
+      let price = parseFloat(priceText.replace(/฿|,/g, '').trim()); // Convert to float
+      if (isNaN(price)) {
+        console.error("Price is not a valid number:", priceText); // Log error if price is invalid
+        return; // Exit if price is not valid
       }
+      let subtotal = price * newQuantity; // Calculate subtotal
+      row.find('.subtotal').text('฿' + subtotal.toFixed(2)); // Update subtotal
+      updateTotal(); // Update total
+    }
 
-      // Increase quantity button
-      $('.increase-quantity').on('click', function() {
-        let quantityInput = $(this).siblings('.quantity-input');
-        let currentQuantity = parseInt(quantityInput.val());
-        quantityInput.val(currentQuantity + 1);
-        updateRow($(this).closest('.grid'), currentQuantity + 1); // Update row subtotal
+    // $('.quantity-input').on('keydown', function() {
+    //   alert("changed!");
+    //   let quantityInput = $(this);
+    //   let currentQuantity = parseInt(quantityInput.val(), 10);
+
+    //   if (isNaN(newQuantity) || newQuantity < 0) {
+
+    //     newQuantity = 0;
+    //   }
+    //   updateRow($(this).closest('.grid'), currentQuantity);
+    //   updateTotal();
+    // });
+
+    // Increase quantity button
+    $('.increase-quantity').on('click', function() {
+      let quantityInput = $(this).siblings('.quantity-input');
+      let currentQuantity = parseInt(quantityInput.val());
+      quantityInput.val(currentQuantity + 1);
+      updateRow($(this).closest('.grid'), currentQuantity + 1); // Update row subtotal
+      updateTotal(); // Update the total amount after changing quantity
+    });
+
+    // Decrease quantity button
+    $('.decrease-quantity').on('click', function() {
+      let quantityInput = $(this).siblings('.quantity-input');
+      let currentQuantity = parseInt(quantityInput.val());
+      if (currentQuantity > 1) { // Prevent quantity from going below 1
+        quantityInput.val(currentQuantity - 1);
+        updateRow($(this).closest('.grid'), currentQuantity - 1); // Update row subtotal
         updateTotal(); // Update the total amount after changing quantity
-      });
-      // Decrease quantity button
-      $('.decrease-quantity').on('click', function() {
-        let quantityInput = $(this).siblings('.quantity-input');
-        let currentQuantity = parseInt(quantityInput.val());
-        if (currentQuantity > 1) { // Prevent quantity from going below 1
-          quantityInput.val(currentQuantity - 1);
-          updateRow($(this).closest('.grid'), currentQuantity - 1); // Update row subtotal
-          updateTotal(); // Update the total amount after changing quantity
+      }
+    });
+
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+    var data = [];
+    data += subtotal;
+
+    $('#checkout-button').on('click', function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        data: {
+          subtotalAmount: subtotal,
+          discountAmount: discount,
+          totalAmount: total
+
+        },
+        type: 'POST',
+        url: '{{ route("cart.checkout") }}',
+        success: function(response) {
+          alert("Succesful");
+        },
+        error: function(response) {
+          console.error(response);
+          alert('Checkout failed. Please try again.');
         }
-      });
-
-      // Checkout button click handler
-      $('#checkout-button').on('submit', function(event) {
-        event.preventDefault(); // Prevent the form from submitting
-
-        // Calculate the total amount right before checkout
-        updateTotal(); // Ensure the total is updated
-
-
-        let subtotalAmount = $('#subtotal-amount').text(); // Get the current subtotal amount
-        let discountAmount = $('#discount-amount').text(); // Get the current discount amount
-        let totalAmount = $('#total-amount').text(); // Get the current total amount
-        console.log('Total amount:', totalAmount);
-
-        $.ajax({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          url: "{{ route('cart.checkout') }}",
-          method: 'POST',
-          data: {
-            total: parseFloat(totalAmount),
-            subtotal: parseFloat(subtotalAmount),
-            discount: parseFloat(discountAmount),
-            _token: "{{ csrf_token() }}"
-          },
-          success: function(response) {
-            alert('Checkout successful!');
-            // Optionally redirect or update the UI here
-          },
-          error: function(xhr) {
-            console.error('Error during checkout:', xhr);
-          }
-        });
-
-      });
-      $(document).on('change', '.quantity-input', function() {
-        updateTotal(); // Recalculate total whenever quantity changes
       });
     });
-    </script>
-
-
-  </section>
+  });
+  </script>
 </body>
+
+</html>
