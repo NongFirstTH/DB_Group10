@@ -98,6 +98,13 @@ class CartController extends Controller
             ]);
         }
 
+        // Reduce the stock
+        foreach ($cartProducts as $cartProduct) {
+            $product = DB::table('products')->where('id', $cartProduct->product_id)->first();
+            $new_quantity = $product->quantity - $cartProduct->quantity;
+            DB::table('products')->where('id', $cartProduct->product_id)->update(['quantity' => $new_quantity]);
+        }
+
 
         return redirect()->route('order.confirmation')->with('success', 'Order has been placed successfully!');
     }
