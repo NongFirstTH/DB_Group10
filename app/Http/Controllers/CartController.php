@@ -50,6 +50,11 @@ class CartController extends Controller
     //     'total_amount' => 'required|numeric',
     // ]);
 
+    // $products = $request->products;
+    // $subtotal = $request->subtotal;
+    // $discount = $request->discount;
+    // $total = $request->total;
+
     $cartProducts = DB::table('carts')
       ->join('products', 'carts.product_id', '=', 'products.id')
       ->join('users', 'carts.user_id', '=', 'users.id')
@@ -73,17 +78,6 @@ class CartController extends Controller
       $discount = 0.1 * $subtotal;
     }
 
-    // $subtotalAmount = $request->total_amount;
-
-    // $discount = 0;
-
-    // if ($subtotalAmount > 1000) {
-    //     $discount = 0.1 * $subtotalAmount;
-    // }
-
-    // $totalAmount = $subtotalAmount - $discount;
-
-    // Remove the current cart
     Cart::where('user_id', $user->id)->delete();
 
     // Create a new order
