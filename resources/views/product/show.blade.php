@@ -82,7 +82,36 @@
                             });
                         });
                     </script>
-
+                    <script>
+                        document.getElementById('addToCartBtn').addEventListener('click', function(e) {
+                            e.preventDefault(); // ป้องกันไม่ให้รีเฟรชหน้า
+                            let product_id = document.querySelector('input[name="product_id"]').value;
+                            let quantity = document.querySelector('input[name="quantity"]').value;
+                            let price = document.querySelector('input[name="price"]').value;
+                            let token = document.querySelector('input[name="_token"]').value;
+                            fetch("{{ route('cart.add') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': token
+                                },
+                                body: JSON.stringify({
+                                    product_id: product_id,
+                                    quantity: quantity,
+                                    price: price
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    alert(data.message);
+                                    // อัปเดตจำนวนสินค้าในตะกร้า (สามารถสร้าง element แสดงจำนวนได้)
+                                    document.getElementById('cartItemCount').innerText = data.cartItemCount;
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                        });
+                    </script>
                 </div>
 
             </div>

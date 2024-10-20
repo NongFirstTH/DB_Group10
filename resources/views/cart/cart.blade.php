@@ -31,7 +31,7 @@
                         {{$item->category_name}}
                     </p>
                     <h6 class="pro-data font-medium text-lg leading-8 text-orange-600  max-[550px]:text-center">
-                        ฿{{$item->price}}.00
+                        ฿{{number_format($item->price, 2)}}
                     </h6>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                 </div>
                 <h6
                     class="subtotal text-orange-600 font-manrope font-bold text-2xl leading-9 w-full max-w-[176px] text-center">
-                    ฿{{$item->quantity * $item->price}}.00</h6>
+                    ฿{{number_format($item->quantity * $item->price, 2)}}</h6>
             </div>
         </div>
         <!-- End For Each Item -->
@@ -91,17 +91,17 @@
             <div class=" bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
                 <div class="flex items-center justify-between w-full mb-6">
                     <p class="font-normal text-xl leading-8 text-gray-400">Sub Total</p>
-                    <h6 class="total-price font-semibold text-xl leading-8 text-gray-900">฿{{$subtotal}}.00
+                    <h6 class="total-price font-semibold text-xl leading-8 text-gray-900">฿{{number_format($subtotal, 2)}}
                     </h6>
                 </div>
                 <div class="flex items-center justify-between w-full pb-6 border-b border-gray-200">
                     <p class="font-normal text-xl leading-8 text-gray-400">Discount</p>
-                    <h6 class="font-semibold text-xl leading-8 text-gray-900">฿{{$discount}}.00</h6>
+                    <h6 class="font-semibold text-xl leading-8 text-gray-900">฿{{number_format($discount, 2)}}</h6>
                 </div>
                 <div class="flex items-center justify-between w-full py-6">
                     <p class="font-manrope font-medium text-2xl leading-9 text-gray-900">Total</p>
                     <h6 class="total-price font-manrope font-medium text-2xl leading-9 text-orange-500">
-                        ฿{{$subtotal - $discount}}.00</h6>
+                        ฿{{number_format($subtotal - $discount, 2)}}</h6>
                 </div>
             </div>
             <div class="flex items-center flex-col sm:flex-row justify-center gap-3 mt-8">

@@ -49,7 +49,11 @@ class ProductController extends Controller
         ]);
     }
 
-    // นำผู้ใช้ไปยังหน้าตะกร้าสินค้าหลังจากเพิ่มสินค้าแล้ว
-    return redirect()->route('cart.cart');
+     // ตอบกลับข้อมูลเป็น JSON โดยไม่เปลี่ยนหน้า
+     return response()->json([
+        'status' => 'success',
+        'message' => 'Product added to cart successfully!',
+        'cartItemCount' => Cart::where('user_id', $user->id)->count() // จำนวนสินค้าทั้งหมดในตะกร้า
+    ]);
 }
 }
