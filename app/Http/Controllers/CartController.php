@@ -93,6 +93,7 @@ class CartController extends Controller
     // Get the latest order id
     $order_id = Order::latest()->first()->id;
 
+
     foreach ($products as $cartProduct) {
       $product = DB::table('products')->where('product_name', $cartProduct['name'])->first();
 
