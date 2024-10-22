@@ -29,6 +29,7 @@ class CartController extends Controller
         'products.image',
         'products.product_name',
         'products.price',
+        'products.quantity as stock',
         DB::raw('products.price * carts.quantity as total_amount')
       )
       ->where('carts.user_id', $user->id) // Filter the cart products for the specific user
@@ -72,31 +73,13 @@ class CartController extends Controller
       ->where('carts.user_id', $user->id) // Filter the cart products for the specific user
       ->get();
 
-
-
-    $discount = 0;
-    $subtotal = 0;
-    $total = 0;
-    // Handle zero value when nothing change
-    // if ($validatedData['subtotalAmount'] != 0) {
-    //   $subtotal = $validatedData['subtotalAmount'];
-    //   $discount = $validatedData['discountAmount'];
-    //   $total = $validatedData['totalAmount'];
-    // } else {
-    //   $subtotal = $cartProducts->sum('total_amount');
-    //   if ($subtotal > 1000) {
-    //     $discount = 0.1 * $subtotal;
-    //     $total = $subtotal - $discount;
-    //   }
-    // }
-
-
     $subtotal = $validatedData['subtotalAmount'];
     $discount = $validatedData['discountAmount'];
     $total = $validatedData['totalAmount'];
     $products = $validatedData['products'];
 
-    Cart::where('user_id', $user->id)->delete();
+
+
 
     // Create a new order
     Order::create([
@@ -111,7 +94,8 @@ class CartController extends Controller
     $order_id = Order::latest()->first()->id;
 
     foreach ($products as $cartProduct) {
-      $product = Product::where('product_name', $cartProduct['name'])->first();
+      $product = DB::table('products')->where('product_name', $cartProduct['name'])->first();
+
       OrderDetail::create([
         'order_id' => $order_id,
         'product_id' => $product->id,
@@ -119,44 +103,42 @@ class CartController extends Controller
         'total_price' => $product->price * $cartProduct['quantity'],
       ]);
 
+      // Check if ordered quantiy exceed stock
+      if ($cartProduct['quantity'] > $product->quantity) {
+        return redirect()->route('cart')->with('error', 'Order failed! ' . $product->product_name . ' stock is not enough!');
+      }
+      // Reduce the stock
       $new_quantity = $product->quantity - $cartProduct['quantity'];
       DB::table('products')->where('id', $product->id)->update(['quantity' => $new_quantity]);
     }
 
-    // Insert the cart products into the order details table
-    // foreach ($cartProducts as $cartProduct) {
-    //   $total_price = $cartProduct->price * $cartProduct->quantity;
-    //   OrderDetail::create([
-    //     'order_id' => $order_id,
-    //     'product_id' => $cartProduct->product_id,
-    //     'quantity' => $cartProduct->quantity,
-    //     'total_price' => $total_price,
-    //   ]);
-    // }
+    // // Insert the cart products into the order details table
+    // // foreach ($cartProducts as $cartProduct) {
+    // //   $total_price = $cartProduct->price * $cartProduct->quantity;
+    // //   OrderDetail::create([
+    // //     'order_id' => $order_id,
+    // //     'product_id' => $cartProduct->product_id,
+    // //     'quantity' => $cartProduct->quantity,
+    // //     'total_price' => $total_price,
+    // //   ]);
+    // // }
 
-    // Reduce the stock
-    // foreach ($products as $cartProduct) {
-    //   $product = DB::table('products')->where('name', $cartProduct['name'])->first();
-    //   $new_quantity = $product->quantity - $cartProduct['quantity'];
-    //   DB::table('products')->where('name', $cartProduct['name'])->update(['quantity' => $new_quantity]);
-    // }
+    // // Reduce the stock
+    // // foreach ($products as $cartProduct) {
+    // //   $product = DB::table('products')->where('name', $cartProduct['name'])->first();
+    // //   $new_quantity = $product->quantity - $cartProduct['quantity'];
+    // //   DB::table('products')->where('name', $cartProduct['name'])->update(['quantity' => $new_quantity]);
+    // // }
 
-    // Old Reduce the stock
-    // foreach ($cartProducts as $cartProduct) {
-    //   $product = DB::table('products')->where('id', $cartProduct->product_id)->first();
-    //   $new_quantity = $product->quantity - $cartProduct->quantity;
-    //   DB::table('products')->where('id', $cartProduct->product_id)->update(['quantity' => $new_quantity]);
-    // }
+    // // Old Reduce the stock
+    // // foreach ($cartProducts as $cartProduct) {
+    // //   $product = DB::table('products')->where('id', $cartProduct->product_id)->first();
+    // //   $new_quantity = $product->quantity - $cartProduct->quantity;
+    // //   DB::table('products')->where('id', $cartProduct->product_id)->update(['quantity' => $new_quantity]);
+    // // }
 
-
+    // // Clear the cart
+    Cart::where('user_id', $user->id)->delete();
     return redirect()->route('cart')->with('success', 'Order has been placed successfully!');
-    // return response()->json([
-    //   'message' => 'Checkout successful!',
-    //   'user' => $user->name, // Example of returning user info
-    //   'total' => $subtotal - $discount,
-    //   'subtotal' => $subtotal,
-    //   'discount' => $discount,
-
-    // ]);
   }
 }
