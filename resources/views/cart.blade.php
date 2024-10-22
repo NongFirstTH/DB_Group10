@@ -132,7 +132,7 @@
   </section>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/b`ootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
   <script>
   $(document).ready(function() {
     // Function to update total price
@@ -203,8 +203,21 @@
     $('#checkout-button').on('click', function(e) {
       e.preventDefault();
 
+      // collect productName & newQuantity from each row
+      let products = [];
+      $('.grid').each(function() {
+        let productName = $(this).find('.pro-data h5').text();
+        let newQuantity = $(this).find('.quantity-input').val();
+        products.push({
+          name: productName,
+          quantity: newQuantity
+        });
+      });
+
       $.ajax({
         data: {
+
+          products: products,
           subtotalAmount: subtotal,
           discountAmount: discount,
           totalAmount: total

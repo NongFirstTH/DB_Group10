@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,8 @@ class CartController extends Controller
     $validatedData = $request->validate([
       'subtotalAmount' => 'required|numeric',
       'discountAmount' => 'required|numeric',
-      'totalAmount' => 'required|numeric'
+      'totalAmount' => 'required|numeric',
+      'products' => 'required|array',
     ]);
 
     $cartProducts = DB::table('carts')
@@ -92,6 +94,7 @@ class CartController extends Controller
     $subtotal = $validatedData['subtotalAmount'];
     $discount = $validatedData['discountAmount'];
     $total = $validatedData['totalAmount'];
+    $products = $validatedData['products'];
 
     Cart::where('user_id', $user->id)->delete();
 
@@ -105,7 +108,20 @@ class CartController extends Controller
 
 
     // Get the latest order id
-    // $order_id = Order::latest()->first()->id;
+    $order_id = Order::latest()->first()->id;
+
+    foreach ($products as $cartProduct) {
+      $product = Product::where('product_name', $cartProduct['name'])->first();
+      OrderDetail::create([
+        'order_id' => $order_id,
+        'product_id' => $product->id,
+        'quantity' => $cartProduct['quantity'],
+        'total_price' => $product->price * $cartProduct['quantity'],
+      ]);
+
+      $new_quantity = $product->quantity - $cartProduct['quantity'];
+      DB::table('products')->where('id', $product->id)->update(['quantity' => $new_quantity]);
+    }
 
     // Insert the cart products into the order details table
     // foreach ($cartProducts as $cartProduct) {
@@ -119,6 +135,13 @@ class CartController extends Controller
     // }
 
     // Reduce the stock
+    // foreach ($products as $cartProduct) {
+    //   $product = DB::table('products')->where('name', $cartProduct['name'])->first();
+    //   $new_quantity = $product->quantity - $cartProduct['quantity'];
+    //   DB::table('products')->where('name', $cartProduct['name'])->update(['quantity' => $new_quantity]);
+    // }
+
+    // Old Reduce the stock
     // foreach ($cartProducts as $cartProduct) {
     //   $product = DB::table('products')->where('id', $cartProduct->product_id)->first();
     //   $new_quantity = $product->quantity - $cartProduct->quantity;
