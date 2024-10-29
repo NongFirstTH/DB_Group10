@@ -56,9 +56,6 @@ class CartController extends Controller
       'discountAmount' => 'required|numeric',
       'totalAmount' => 'required|numeric',
       'products' => 'required|array',
-      'products.*.name' => 'required|string', // Validate name
-      'products.*.quantity' => 'required|integer|min:1', // Validate quantity
-      'products.*.price' => 'required|numeric', // Validate price
     ]);
 
     // Fetch the cart products for the authenticated user
