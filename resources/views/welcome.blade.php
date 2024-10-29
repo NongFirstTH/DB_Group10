@@ -1,6 +1,8 @@
 @extends("layouts.layout")
 
 @section("content")
+
+<div class="min-h-screen w-full bg-gray-100 mt-14">
 <div class="flex flex-col items-center bg-white-100 mb-5 p-8 rounded-lg  max-w-lg mx-auto">
 
     <!-- Title -->
@@ -9,7 +11,7 @@
 
     <!-- Image -->
     <div class="relative"> 
-        <img src="https://s3-alpha-sig.figma.com/img/c11c/f2ef/37b6693f428f43d688bb5b533b603376?Expires=1729468800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=M1g0XARswnafNUyRFxtAwnMoQV-8OySa~5jUEq0GGgdDpip2k62GIB5nVqYgA5UfsR-XiYrBepdBvx1DqmY7uekEcxu9EARYOfcMbjwfKVTMUJIYdiQdu1WqkE-gurkXtPyizh2yus86Tndv3uE7yyd0P6SNqZHnC42-lCRgeC0xQ1J4FmbicUh7UWqkIlnBN-hOVOxkp~GDaJgwOK0-12zR2s-xOvvpAu3P3VASaDr9kR9nc9Cu7ulXbYIyPOlmXswPAzKcXWaBiJA9q3HxnWWiSGg5PWw~h8bN9RLXfmncbv80j~klkN9LWInVIxQtpc8CuvceBTrbXUpf3EENmQ__" 
+        <img src="https://img.freepik.com/free-photo/studio-shot-papillon-fallen-little-dogs-isolated-white-studio-wall_155003-42995.jpg?t=st=1730191597~exp=1730195197~hmac=e5b39972702099448d5f24220f5e4bc22b87bd8d61fc3e71579b45d9e2d68a87&w=996" 
         alt="Dog" class="w-full h-auto rounded-full mx-auto">
     </div>
     
@@ -23,5 +25,5 @@
                             shop now
     </a>
 </div>
-
+</div>
 @endsection

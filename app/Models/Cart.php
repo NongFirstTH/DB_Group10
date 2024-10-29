@@ -9,17 +9,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Cart extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'carts';
 
     protected $fillable = [
         'user_id',
         'product_id',
-        'total_amount',
         'quantity',
+        'total_amount'
     ];
-        
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

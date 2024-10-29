@@ -12,7 +12,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/category', [CategoryController::class,'showCategory'])->name('category.index');
+Route::get('/category', [CategoryController::class, 'showCategory'])->name('category.index');
 Route::get('/category/{category_name}', [CategoryController::class, 'getProduct'])->name('category.show-product');
 
 Route::get('/profile', function () {
@@ -27,11 +27,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/change-password', [ProfileController::class, 'showChangePassword'])->name('profile.change-password');
     Route::get('/product/{id}', [ProductController::class, 'showProductPage'])->name('product.show');
     Route::post('/profile/photo/update', [UserController::class, 'updateProfilePhoto'])->name('profile.photo.update');
-    Route::get('/cart', [CartController::class, 'showCart'])->name('cart.cart');
+    Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
     Route::post('/cart/add', [ProductController::class, 'addToCart'])->name('cart.add');
+    Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
     Route::get('/order-confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
     Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 
 
-require __DIR__.'/auth.php';
+
+
+
+require __DIR__ . '/auth.php';

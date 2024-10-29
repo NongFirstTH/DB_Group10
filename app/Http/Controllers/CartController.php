@@ -1,120 +1,153 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\Cart;
+
 class CartController extends Controller
 {
-    //
-    public function showCart()
-    {
-        $cart = DB::table('carts')->get();
+  //
+  public function showCart()
+  {
+    $cart = DB::table('carts')->get();
 
-        $user = Auth::user();
+    $user = Auth::user();
 
-        $cartProducts = DB::table('carts')
-            ->join('products', 'carts.product_id', '=', 'products.id')
-            ->join('users', 'carts.user_id', '=', 'users.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select(
-                'carts.*',
-                'categories.category_name',
-                'users.username as user_name',
-                'products.image',
-                'products.product_name',
-                'products.price',
-                DB::raw('products.price * carts.quantity as total_amount')
-            )
-            ->where('carts.user_id', $user->id) // Filter the cart products for the specific user
-            ->get();
+    $cartProducts = DB::table('carts')
+      ->join('products', 'carts.product_id', '=', 'products.id')
+      ->join('users', 'carts.user_id', '=', 'users.id')
+      ->join('categories', 'products.category_id', '=', 'categories.id')
+      ->select(
+        'carts.*',
+        'categories.category_name',
+        'users.username as user_name',
+        'products.image',
+        'products.product_name',
+        'products.price',
+        'products.quantity as stock',
+        DB::raw('products.price * carts.quantity as total_amount')
+      )
+      ->where('carts.user_id', $user->id) // Filter the cart products for the specific user
+      ->get();
 
-        $subtotal = $cartProducts->sum('total_amount');
-        $products = DB::table('products')->get();
+    $subtotal = $cartProducts->sum('total_amount');
+    $products = DB::table('products')->get();
 
-        $discount = 0;
-        if ($subtotal > 1000) {
-            $discount = 0.1 * $subtotal;
-        }
-
-        return view('cart.cart', compact('cart', 'products', 'cartProducts', 'subtotal', 'discount'));
+    $discount = 0;
+    if ($subtotal > 1000) {
+      $discount = 0.1 * $subtotal;
     }
 
-    public function checkout(Request $request)
-    {
-        $user = Auth::user();
+    return view('cart.show', compact('cart', 'products', 'cartProducts', 'subtotal', 'discount'));
+  }
 
-        // $request->validate([
-        //     'total_amount' => 'required|numeric',
-        // ]);
+  public function checkout(Request $request)
+  {
+    $user = Auth::user();
 
-        $cartProducts = DB::table('carts')
-            ->join('products', 'carts.product_id', '=', 'products.id')
-            ->join('users', 'carts.user_id', '=', 'users.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select(
-                'carts.*',
-                'categories.category_name',
-                'users.username as user_name',
-                'products.image',
-                'products.product_name',
-                'products.price',
-                DB::raw('products.price * carts.quantity as total_amount')
-            )
-            ->where('carts.user_id', $user->id) // Filter the cart products for the specific user
-            ->get();
+    $validatedData = $request->validate([
+      'subtotalAmount' => 'required|numeric',
+      'discountAmount' => 'required|numeric',
+      'totalAmount' => 'required|numeric',
+      'products' => 'required|array',
+      'products.*.name' => 'required|string', // Validate name
+      'products.*.quantity' => 'required|integer|min:1', // Validate quantity
+      'products.*.price' => 'required|numeric', // Validate price
+    ]);
 
-        $subtotal = $cartProducts->sum('total_amount');
+    // Fetch the cart products for the authenticated user
+    $cartProducts = DB::table('carts')
+      ->join('products', 'carts.product_id', '=', 'products.id')
+      ->join('users', 'carts.user_id', '=', 'users.id')
+      ->join('categories', 'products.category_id', '=', 'categories.id')
+      ->select(
+        'carts.*',
+        'categories.category_name',
+        'users.username as user_name',
+        'products.image',
+        'products.product_name',
+        'products.price',
+        DB::raw('products.price * carts.quantity as total_amount')
+      )
+      ->where('carts.user_id', $user->id)
+      ->get();
 
-        $discount = 0;
-        if ($subtotal > 1000) {
-            $discount = 0.1 * $subtotal;
-        }
+    $subtotal = $validatedData['subtotalAmount'];
+    $discount = $validatedData['discountAmount'];
+    $total = $validatedData['totalAmount'];
+    $products = $validatedData['products'];
 
-        // $subtotalAmount = $request->total_amount;
+    // Create a new order
+    $order = Order::create([
+      'user_id' => $user->id,
+      'total_amount' => $subtotal,
+      'payment' => $total,
+      'discount' => $discount,
+    ]);
 
-        // $discount = 0;
+    // Get the latest order id
+    $order_id = $order->id;
 
-        // if ($subtotalAmount > 1000) {
-        //     $discount = 0.1 * $subtotalAmount;
-        // }
+    foreach ($products as $cartProduct) {
+      $product = DB::table('products')->where('product_name', $cartProduct['name'])->first();
 
-        // $totalAmount = $subtotalAmount - $discount;
+      // Check if the product exists
+      if (!$product) {
+        return redirect()->route('cart')->with('error', 'Product not found: ' . $cartProduct['name']);
+      }
 
-        // Remove the current cart
-        Cart::where('user_id', $user->id)->delete();
+      // Check if ordered quantity exceeds stock
+      if ($cartProduct['quantity'] > $product->quantity) {
+        return redirect()->route('cart')->with('error', 'Order failed! ' . $product->product_name . ' stock is not enough!');
+      }
 
-        // Create a new order
-        Order::create([
-            'user_id' => $user->id,
-            'total_amount' => $subtotal,
-            'payment' => $subtotal - $discount,
-            'discount' => $discount,
-        ]);
+      OrderDetail::create([
+        'order_id' => $order_id,
+        'product_id' => $product->id,
+        'quantity' => $cartProduct['quantity'],
+        'total_price' => $product->price * $cartProduct['quantity'],
+      ]);
 
-        // Get the latest order id
-        $order_id = Order::latest()->first()->id;
-
-        // Insert the cart products into the order details table
-        foreach ($cartProducts as $cartProduct) {
-            $total_price = $cartProduct->price * $cartProduct->quantity;
-            OrderDetail::create([
-                'order_id' => $order_id,
-                'product_id' => $cartProduct->product_id,
-                'quantity' => $cartProduct->quantity,
-                'total_price' => $total_price,
-            ]);
-        }
-
-        // Reduce the stock
-        foreach ($cartProducts as $cartProduct) {
-            $product = DB::table('products')->where('id', $cartProduct->product_id)->first();
-            $new_quantity = $product->quantity - $cartProduct->quantity;
-            DB::table('products')->where('id', $cartProduct->product_id)->update(['quantity' => $new_quantity]);
-        }
-
-        return redirect()->route('cart.cart')->with('success', 'Order has been placed successfully!');
+      // Reduce the stock
+      $new_quantity = $product->quantity - $cartProduct['quantity'];
+      DB::table('products')->where('id', $product->id)->update(['quantity' => $new_quantity]);
     }
+
+    // Clear the cart
+    Cart::where('user_id', $user->id)->delete();
+
+    return redirect()->route('order.confirmation')->with('success', 'Order has been placed successfully!');
+  }
+
+
+  public function update(Request $request, $id)
+  {
+    $item = Cart::find($id); // Find the cart item
+
+    // Handle quantity increase/decrease
+    if ($request->action === 'increase') {
+      $item->quantity++;
+    } elseif ($request->action === 'decrease' && $item->quantity > 1) {
+      $item->quantity--;
+    }
+
+    $item->save(); // Save changes to the database
+
+    return redirect()->route('cart.show')->with('success', 'Cart updated successfully.');
+  }
+
+  // Remove an item from the cart
+  public function destroy($id)
+  {
+    $item = Cart::find($id); // Find the cart item
+    $item->delete(); // Delete the item
+
+    return redirect()->route('cart.show')->with('success', 'Item removed from cart.');
+  }
 }

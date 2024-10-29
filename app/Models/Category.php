@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'categories';
     protected $fillable = [
     'category_name'
