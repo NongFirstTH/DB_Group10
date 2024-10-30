@@ -38,7 +38,7 @@
                   class="border border-gray-300 rounded-md p-1 w-24 focus:ring-orange-400 focus:border-orange-400 transition duration-150 ease-in-out">
               </div>
 
-              <button button id="addToCartButton" onclick="validateAddToCart(productId)"
+              <button button id="addToCartButton" type="submit" onclick="showAddToCartMessage({{ $product->id }})"
                 class=" mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 {{ $product->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                 {{ $product->quantity == 0 ? 'disabled' : '' }}>
                 Add to Cart
@@ -59,15 +59,34 @@
           </div>
           <!-- HTML -->
           <script>
+          let hideMessageTimeout = null; // Define a single timeout variable
 
+          function showAddToCartMessage() {
+            const message = document.getElementById('addToCartMessage');
+
+            // Show the message instantly without CSS transitions
+            message.classList.remove('hidden');
+
+            // Clear any existing timeout so it won’t hide prematurely
+            if (hideMessageTimeout) {
+              clearTimeout(hideMessageTimeout);
+            }
+
+            // Set a new timeout to hide the message exactly 2 seconds later
+            hideMessageTimeout = setTimeout(() => {
+              message.classList.add('hidden');
+            }, 2000); // 2000 milliseconds = 2 seconds
+          }
           </script>
 
-
           <style>
-          /* CSS to hide the messages when hidden class is applied */
-          #addToCartMessage.hidden,
-          #stockErrorMessage.hidden {
+          /* Make sure the "hidden" class instantly hides the element with no transition */
+          #addToCartMessage.hidden {
             display: none;
+          }
+
+          #addToCartMessage {
+            display: block;
           }
           </style>
 

@@ -165,6 +165,12 @@ class CartController extends Controller
       }
     } elseif ($request->action === 'decrease' && $item->quantity > 1) {
       $item->quantity--;
+    } else {
+      if ($request->quantity > $item->product->quantity) {
+        $item->quantity = $item->product->quantity;
+      } else {
+        $item->quantity = $request->quantity;
+      }
     }
     $item->save(); // Save changes to the database
 

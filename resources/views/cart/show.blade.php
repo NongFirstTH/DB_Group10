@@ -50,7 +50,7 @@
             <!-- Quantity Number -->
             <input type="text" name="quantity" value="{{$item->quantity}}"
               class="quantity-input border border-gray-300 outline-none text-gray-900 font-semibold text-sm w-full max-w-[60px] placeholder:text-gray-900 py-2 text-center bg-transparent"
-              min="1" max="{{$item->stock}}" readonly>
+              min="1" max="{{$item->stock}}">
 
             <!-- Plus Button -->
             <button name="action" value="increase" type="submit"
@@ -146,3 +146,15 @@
     </div>
   </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/b`ootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function() {
+  $(".quantity-input").on("change", function() {
+    $(this).closest("form").submit();
+  });
+});
+</script>
