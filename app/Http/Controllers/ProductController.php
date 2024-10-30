@@ -49,12 +49,12 @@ class ProductController extends Controller
         } else {
             // If the product is not in the cart, create a new cart item
             $totalAmount = $product->price * $request->quantity;
-            
+
             Cart::create([
                 'user_id' => $user->id,
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
-                'total_amount' =>  $totalAmount,
+                'total_amount' => $totalAmount,
             ]);
         }
 
