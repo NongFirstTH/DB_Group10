@@ -71,8 +71,8 @@
 
             <!-- Quantity Number -->
             <input type="text"
-              class="quantity-input border-y border-gray-200 outline-none text-gray-900 font-semibold text-sm w-full max-w-[118px] min-w-[80px] placeholder:text-gray-900 py-[15px] text-center bg-transparent"
-              min="1" max="{{$item->stock}}" value={{$item->quantity}} placeholder={{$item->quantity}}>
+              class="quantity-input border-y border-gray-200 outline-none text-gray-900 font-semibold text-sm w-full max-w-[118px] min-w-[80px] placeholder:text-gray-900 py-[15px] text-center bg-gray-100 focus:border-gray-200 focus:ring-0"
+              min="1" max="{{$item->stock}}" value={{$item->quantity}} placeholder={{$item->quantity}} readonly>
 
 
 

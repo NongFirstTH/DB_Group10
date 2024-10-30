@@ -3,8 +3,9 @@
 
     <!-- Logo (Left) -->
     <div class="flex items-center">
-      <img src="https://cdn.dribbble.com/users/1296676/screenshots/6942574/media/a112f8f10da4463d1030264a25f78eea.jpg"
-        alt="Logo" class="h-10 w-10 rounded-full">
+      <a href="{{ url('/category')}}">
+        <img src="https://cdn.dribbble.com/users/1296676/screenshots/6942574/media/a112f8f10da4463d1030264a25f78eea.jpg"
+          alt="Logo" class="h-10 w-10 rounded-full"></a>
       <a href="{{ url('/category') }}"
         class="ml-3 text-2xl font-semibold text-gray-800 dark:text-white hover:text-orange-600 transition">
         SHOGGY
