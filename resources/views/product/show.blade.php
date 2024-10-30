@@ -39,7 +39,7 @@
               </div>
               <form>
                 <button type="submit" onClick="showAddToCartMessage()" name="quantity" id="quantity"
-                  max="{{ $product->quantity }}" onClick=" stockErrorMessage()"
+                  max="{{ $product->quantity }}"
                   class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 {{ $product->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                   {{ $product->quantity == 0 ? 'disabled' : '' }}>
                   Add to Cart
@@ -99,15 +99,6 @@
               });
             }
           </script>
-
-          <style>
-            /* CSS to hide the messages when hidden class is added */
-            #addToCartMessage.hidden,
-            #stockErrorMessage.hidden {
-              display: none;
-            }
-          </style>
-
 
         </div>
       </div>
