@@ -41,6 +41,14 @@ class ProductController extends Controller
             ->where('product_id', $request->product_id)
             ->first();
 
+        $requestedQuantity = $request->quantity;
+        $currentCartQuantity = $cartItem ? $cartItem->quantity : 0;
+
+        if ($requestedQuantity + $currentCartQuantity > $product->quantity) {
+            // If the requested quantity exceeds the available quantity, return an error
+            return view('product.show', compact('product'))->with('error', 'Requested quantity exceeds available quantity');
+        }
+
         if ($cartItem) {
             // If the product is already in the cart, increase the quantity
             $cartItem->quantity += $request->quantity;
@@ -58,6 +66,6 @@ class ProductController extends Controller
             ]);
         }
 
-        return view('product.show', compact('product'));
+        return view('product.show', compact('product'))->with('success', 'Product added to cart successfully');
     }
 }
