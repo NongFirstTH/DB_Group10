@@ -1,11 +1,11 @@
 @extends("layouts.layout")
 
+@section('content')
 <div class="min-h-screen w-full bg-gray-100">
   <div class="py-12 mt-14">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="flex p-6 bg-white border-b border-gray-200">
-
 
           <!-- Product Image -->
           <div class="w-1/2">
@@ -27,16 +27,15 @@
             </div>
 
             <!-- Add to Cart Form -->
-            <form action="{{ route('cart.add') }}" method="POST" class="mt-4">
+            <form action="{{ route('cart.add') }}" method="POST" class="mt-4" onsubmit="showAddToCartMessage(event)">
               @csrf
               <input type="hidden" name="product_id" value="{{ $product->id }}">
               <input type="hidden" name="price" value="{{ $product->price }}">
 
               <div class="flex items-center space-x-2">
                 <label for="quantity" class="text-lg">Quantity:</label>
-                <input type="number" name="quantity" id="quantity" value="0" min="0" max="{{ $product->quantity }}"
+                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->quantity }}"
                   class="border border-gray-300 rounded-md p-1 w-24 focus:ring-orange-400 focus:border-orange-400 transition duration-150 ease-in-out">
-                <!-- Added border and transition classes -->
               </div>
 
               <button type="submit"
@@ -47,8 +46,29 @@
             </form>
           </div>
 
+          <!-- Add to Cart Confirmation Modal --> 
+           <div id="addToCartMessage" class="fixed bottom-10 right-10 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg hidden"> 
+            Added to cart! 
+           </div>
+
+            <script>
+              function showAddToCartMessage(event) {
+                event.preventDefault(); // Prevent form submission to show message first
+                const message = document.getElementById('addToCartMessage');
+                // Show the message
+                message.classList.remove('hidden');
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                  message.classList.add('hidden');
+                  // Proceed with form submission after showing message
+                  event.target.submit();
+                }, 3000);
+              }
+            </script>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+@endsection
