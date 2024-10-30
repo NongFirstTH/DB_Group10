@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function editPhoto()
+    {
+        return view('profile.edit-photo'); // Adjust the view name according to your directory structure
+    }
+
     public function updateProfilePhoto(Request $request)
     {
         $request->validate([
@@ -22,13 +27,13 @@ class UserController extends Controller
                 Storage::disk('public')->delete($user->profile_photo);
             }
 
-            $fileName = time().'_'.$request->file('profile_photo')->getClientOriginalName();
+            $fileName = time() . '_' . $request->file('profile_photo')->getClientOriginalName();
             $filePath = $request->file('profile_photo')->storeAs('uploads/profile_photos', $fileName, 'public');
 
             $user->profile_photo = $filePath;
             $user->save();
         }
 
-        return back()->with('status', 'Profile photo updated successfully!');
+        return redirect()->route('profile.edit.photo')->with('status', 'photo-updated');
     }
 }

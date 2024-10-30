@@ -8,23 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use App\Models\Order; // Ensure you have the Order model imported
+use App\Models\Order;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function show(Request $request): View
-    {
-        $user = Auth::user();
-        return view('profile.edit', compact('user')); // Pass the user to the view
-    }
 
     public function showProfile(Request $request): View
     {
         $user = Auth::user(); // Get the authenticated user
         return view('profile.show-profile', compact('user')); // Pass the user to the 'profile.show' view
+    }
+
+    /**
+     * Display the user's profile edit form.
+     */
+    public function editProfile()
+    {
+        return view('profile.edit-profile');
     }
 
     /**
@@ -44,15 +44,19 @@ class ProfileController extends Controller
 
         // Check if the email field has changed
         if ($request->user()->isDirty('email')) {
+            // Only update email if it has changed
+            $user->email = $request->validated('email'); // Get the validated email 
+            
             $user->email_verified_at = null; // Reset the email verification timestamp if the email was changed
         }
 
         // Save the updated user
         $user->save();
 
-        // Redirect back to the profile edit page with a status message
-        return back()->with('status', 'profile-updated');
+        // Redirect to the profile edit section with a status message
+        return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
+
 
     /**
      * Display the user's orders.
@@ -68,7 +72,7 @@ class ProfileController extends Controller
     /**
      * Display the change password form.
      */
-    public function showChangePassword(Request $request): View
+    public function updatePassword(Request $request): View
     {
         return view('profile.change-password'); // Return change password view
     }
