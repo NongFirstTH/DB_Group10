@@ -33,8 +33,8 @@
 
       <div class="col-span-12 lg:col-span-9">
         <div class="bg-white shadow-md rounded-lg p-6">
-          <h3 class="text-xl font-semibold mb-4 text-orange-600">Change Password</h3>
-          <p class="text-gray-800 mb-6">Update your account password.</p>
+          <h3 class="text-xl font-semibold mb-4 text-orange-600">Edit Profile Information</h3>
+          <p class="text-gray-800 mb-6">Update your profile information.</p>
           <div class="max-w-xl">
             @include('profile.partials.update-profile-information-form')
           </div>

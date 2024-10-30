@@ -52,12 +52,18 @@
     <x-input-error class="mt-2" :messages="$errors->get('lastname')" />
   </div>
 
+  <style>
+  .flex-container {
+    display: flex;
+    gap: 0.5rem;
+  }
+  </style>
   <!-- Phone Number -->
   <div>
     <x-input-label for="phone_number" :value="__('Phone Number')" class="text-gray-900" />
-    <div class="flex mt-2">
+    <div class="flex-container mt-2">
       <select id="country_code" name="country_code"
-        class="border border-gray-300 p-2 rounded-md bg-white focus:border-orange-500 focus:ring focus:ring-orange-500 hover:border-orange-500">
+        class="border border-gray-300 p-3 rounded-md bg-white focus:border-orange-500 focus:ring focus:ring-orange-500 hover:border-orange-500">
         <option value="+1">+1 (US/Canada)</option>
         <option value="+44">+44 (UK)</option>
         <option value="+91">+91 (India)</option>

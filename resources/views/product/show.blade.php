@@ -27,78 +27,94 @@
             </div>
 
             <!-- Add to Cart Form -->
-            <form action="{{ route('cart.add') }}" method="POST" class="mt-4" onsubmit="showAddToCartMessage(event)">
+            <form action="{{ route('cart.add') }}" method="POST" class="mt-4" onsubmit="return validateAddToCart()">
               @csrf
               <input type="hidden" name="product_id" value="{{ $product->id }}">
               <input type="hidden" name="price" value="{{ $product->price }}">
 
               <div class="flex items-center space-x-2">
                 <label for="quantity" class="text-lg">Quantity:</label>
-                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->quantity }}"
+                <input type="number" name="quantity" id="quantity" value="1" min="0" max="{{ $product->quantity }}"
                   class="border border-gray-300 rounded-md p-1 w-24 focus:ring-orange-400 focus:border-orange-400 transition duration-150 ease-in-out">
               </div>
-              <form>
-                <button type="submit" onClick="showAddToCartMessage()" name="quantity" id="quantity"
-                  max="{{ $product->quantity }}"
-                  class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 {{ $product->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
-                  {{ $product->quantity == 0 ? 'disabled' : '' }}>
-                  Add to Cart
-                </button>
-              </form>
+
+              <button onClick="return validateAddToCart()" max="{{ $product->quantity }}"
+                class=" mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 {{ $product->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
+                {{ $product->quantity == 0 ? 'disabled' : '' }}>
+                Add to Cart
+              </button>
+
             </form>
           </div>
 
-          <!-- Add to Cart Confirmation Messages -->
-          <div class="fixed bottom-10 right-10 bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg hidden"
-            id="addToCartMessage">
-            Added to cart!
-          </div>
+          <<!-- Success and Error Messages -->
+            <div class="fixed bottom-10 right-10 bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg hidden"
+              id="addToCartMessage">
+              Added to cart!
+            </div>
 
-          <div class="fixed bottom-10 right-10 bg-red-500 text-white py-3 px-6 rounded-lg shadow-lg hidden"
-            id="stockErrorMessage">
-            Cannot add more than available stock!
-          </div>
+            <div class="fixed bottom-10 right-10 bg-red-500 text-white py-3 px-6 rounded-lg shadow-lg hidden"
+              id="stockErrorMessage">
+              Cannot add more than available stock!
+            </div>
+            <script>
+              let hideMessageTimeout; // Timeout variable for managing message visibility
 
-          <script>
-            function showAddToCartMessage() {
-              const message = document.getElementById('addToCartMessage');
-              const errorMessage = document.getElementById('stockErrorMessage');
-              const quantityInput = document.getElementById('quantity');
-              const maxQuantity = parseInt(quantityInput.getAttribute('max'));
-              const selectedQuantity = parseInt(quantityInput.value);
+              function validateAddToCart() {
+                const successMessage = document.getElementById('addToCartMessage');
+                const errorMessage = document.getElementById('stockErrorMessage');
+                const quantityInput = document.getElementById('quantity');
+                const maxQuantity = parseInt(quantityInput.getAttribute('max'));
+                const selectedQuantity = parseInt(quantityInput.value);
 
-              // Clear any previous timeout to prevent unexpected hiding
-              clearTimeout(hideMessageTimeout);
+                // Clear any existing timeout
+                clearTimeout(hideMessageTimeout);
 
-              if (selectedQuantity > maxQuantity) {
-                // Show error message if quantity exceeds stock
-                errorMessage.classList.remove('hidden');
-                message.classList.add('hidden'); // Hide success message
+                if (selectedQuantity > maxQuantity) {
+                  // Show error message if quantity exceeds stock
+                  errorMessage.classList.remove('hidden');
+                  successMessage.classList.add('hidden'); // Hide success message
 
-                // Hide error message after 3 seconds
-                hideMessageTimeout = setTimeout(() => {
-                  errorMessage.classList.add('hidden');
-                }, 3000);
-              } else {
-                // Show success message
-                message.classList.remove('hidden');
-                errorMessage.classList.add('hidden'); // Hide error message if showing
 
-                // Hide success message after 3 seconds
-                hideMessageTimeout = setTimeout(() => {
-                  message.classList.add('hidden');
-                }, 3000);
+                  // Prevent form submission
+                  return false;
+                } else {
+                  // Show success message
+                  successMessage.classList.remove('hidden');
+                  errorMessage.classList.add('hidden'); // Hide error message
+
+
+
+                  // Allow form submission
+                  return true;
+                }
               }
 
-              // Allow clicking on either message to hide it immediately
-              message.addEventListener('click', () => {
-                message.classList.add('hidden');
-              });
-              errorMessage.addEventListener('click', () => {
-                errorMessage.classList.add('hidden');
-              });
-            }
-          </script>
+              // Function to hide messages on click
+              function hideMessagesOnClick() {
+                const successMessage = document.getElementById('addToCartMessage');
+                const errorMessage = document.getElementById('stockErrorMessage');
+
+                successMessage.addEventListener('click', () => {
+                  successMessage.classList.add('hidden');
+                });
+
+                errorMessage.addEventListener('click', () => {
+                  errorMessage.classList.add('hidden');
+                });
+              }
+
+              // Initialize message hiding on click
+              hideMessagesOnClick();
+            </script>
+
+            <style>
+              /* CSS to hide the messages when hidden class is applied */
+              #addToCartMessage.hidden,
+              #stockErrorMessage.hidden {
+                display: none;
+              }
+            </style>
 
         </div>
       </div>

@@ -122,6 +122,34 @@ class CartController extends Controller
     return view('order.confirmation');
   }
 
+  public function updateAll(Request $request)
+  {
+    $user = Auth::user();
+
+    $validatedData = $request->validate([
+      'subtotalAmount' => 'required|numeric',
+      'discountAmount' => 'required|numeric',
+      'totalAmount' => 'required|numeric',
+      'products' => 'required|array',
+    ]);
+
+    $products = $validatedData['products'];
+
+    foreach ($products as $product) {
+      $cartItem = Cart::where('user_id', $user->id)
+        ->where('product_name', $product['name'])
+        ->first();
+
+      if ($cartItem) {
+        $cartItem->quantity = $product['quantity'];
+        $cartItem->total_amount = $product['quantity'] * $cartItem->price;
+        $cartItem->save();
+      }
+    }
+
+    return view('cart.show', compact('cart', 'products', 'cartProducts', 'subtotal', 'discount'));
+  }
+
 
   public function update(Request $request, $id)
   {
