@@ -119,7 +119,7 @@ class CartController extends Controller
     // Clear the cart
     Cart::where('user_id', $user->id)->delete();
 
-    return redirect()->route('order.confirmation')->with('success', 'Order has been placed successfully!');
+    return view('order.confirmation');
   }
 
 

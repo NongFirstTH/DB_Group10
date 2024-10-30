@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/category', [CategoryController::class, 'showCategory'])->name('category.index');
 Route::get('/category/{category_name}', [CategoryController::class, 'getProduct'])->name('category.show-product');
