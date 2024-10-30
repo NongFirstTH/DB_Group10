@@ -15,7 +15,7 @@
                                 Overview</a></li>
                         <li><a href="{{ route('profile.show-order') }}" class="block text-orange-600 font-semibold">My
                                 Orders</a></li>
-                        <li><a href="{{ route('profile.change-password') }}" class="block hover:text-orange-600">Change
+                        <li><a href="{{ route('profile.update.password') }}" class="block hover:text-orange-600">Change
                                 Password</a></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}" id="logout-form" class="inline">

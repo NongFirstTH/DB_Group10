@@ -20,7 +20,7 @@
       @foreach ($cartProducts as $item)
       <!-- For Each Item -->
       <div class="grid grid-cols-1 lg:grid-cols-2 border-t border-gray-200 py-4">
-        <div class="flex items-center flex-col lg:flex-row gap-3 lg:gap-6 w-full">
+        <div class="flex items-center flex-col lg:flex-row gap-4 lg:gap-6 w-full">
           <div class="img-box">
             <img src="{{ $item->image }}" alt="" class="xl:w-[140px] rounded-xl object-cover">
           </div>
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <div class="flex items-center flex-col lg:flex-row w-full gap-2">
+        <div class="flex items-center flex-col lg:flex-row w-full gap-4">
           <!-- Form for Quantity Update -->
           <form action="{{ route('cart.update', $item->id) }}" method="POST" class="flex items-center w-full justify-center gap-2">
             @csrf
@@ -53,6 +53,11 @@
               </svg>
             </button>
           </form>
+          <div>
+            <h6 class="subtotal text-orange-600 font-manrope font-bold text-lg leading-9 text-center">
+              ฿{{$item->quantity * $item->price}}
+            </h6>
+          </div>
 
           <!-- Delete Button -->
           <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="flex items-center">
@@ -62,13 +67,8 @@
               <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
-              Remove
             </button>
           </form>
-
-          <h6 class="subtotal text-orange-600 font-manrope font-bold text-lg leading-9 text-center">
-            ฿{{$item->quantity * $item->price}}
-          </h6>
         </div>
       </div>
       @endforeach
@@ -85,20 +85,20 @@
     <div class="bg-gray-50 rounded-lg p-6 w-full max-w-md">
       <h2 class="font-manrope font-bold text-lg leading-8 text-gray-900 mb-4">Checkout</h2>
       @if($cartProducts->count() > 0)
-      <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center justify-between mb-4">
         <p class="font-normal text-sm leading-8 text-gray-400">Sub Total</p>
         <h6 id="subtotal-amount" class="subtotal-price font-semibold text-lg leading-8 text-gray-900">฿{{$subtotal}}</h6>
       </div>
-      <div class="flex items-center justify-between pb-6 border-b border-gray-200">
+      <div class="flex items-center justify-between mb-4 border-b border-gray-200">
         <p class="font-normal text-sm leading-8 text-gray-400">Discount</p>
         <h6 id="discount-amount" class="discount-price font-semibold text-lg leading-8 text-gray-900">฿{{$discount}}</h6>
       </div>
-      <div class="flex items-center justify-between py-6">
+      <div class="flex items-center justify-between mb-6">
         <p class="font-manrope font-medium text-lg leading-9 text-gray-900">Total</p>
         <h6 id="total-amount" class="total-price font-manrope font-medium text-lg leading-9 text-orange-500">฿{{$subtotal - $discount}}.00</h6>
       </div>
 
-      <form action="{{ route('cart.checkout') }}" method="POST" class="flex items-center justify-center mt-8">
+      <form action="{{ route('cart.checkout') }}" method="POST" class="flex items-center justify-center mt-4">
         @csrf
         <!-- Hidden inputs for required data -->
         <input type="hidden" name="subtotalAmount" value="{{ $subtotal }}">
@@ -119,11 +119,7 @@
           </svg>
         </button>
       </form>
-
-
-
       @endif
     </div>
-
   </div>
 </section>

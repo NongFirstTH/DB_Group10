@@ -2,14 +2,14 @@
     @csrf
     <div class="flex flex-col space-y-1">
         <x-input-label for="profile_photo" :value="__('Profile Photo')" class="text-gray-700" />
-        <input type="file" name="profile_photo" id="profile_photo" >
+        <input type="file" name="profile_photo" id="profile_photo">
         <x-input-error class="text-red-500 text-sm" :messages="$errors->get('profile_photo')" />
     </div>
 
     <div class="flex items-center gap-4">
-        <x-primary-button class="text-white px-4 py-2 rounded-md bg-orange-600 hover:bg-orange-500">
+        <button class="text-white px-4 py-2 rounded-md bg-orange-500 hover:bg-[#FF8343]">
             {{ __('Save') }}
-        </x-primary-button>
+        </button>
 
         @if (session('status') === 'profile-photo-updated')
         <p
