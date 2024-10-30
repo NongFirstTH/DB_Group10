@@ -94,7 +94,30 @@
           <h6
             class="subtotal text-orange-600 font-manrope font-bold text-lg leading-9 w-full max-w-[176px] text-center">
             ฿{{$item->quantity * $item->price}}.00</h6>
+          <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="flex items-center">
+            @csrf
+            @method('DELETE')
+            <!-- Use DELETE method to remove the item -->
+            <button type="submit"
+              class="text-red-600 font-semibold flex items-center gap-1 hover:text-red-800 transition duration-300">
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <!-- Trash can lid -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3h6m-7 4h8" />
+                <!-- Trash can body -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 7v12a2 2 0 002 2h6a2 2 0 002-2V7H7z" />
+                <!-- Vertical lines inside the trash can -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11v6M14 11v6" />
+              </svg>
+
+
+            </button>
         </div>
+
+        <!-- Delete Button -->
+
+        </form>
       </div>
       <!-- End For Each Item -->
       @endforeach

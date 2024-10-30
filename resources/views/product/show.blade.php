@@ -6,6 +6,7 @@
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="flex p-6 bg-white border-b border-gray-200">
 
+
           <!-- Product Image -->
           <div class="w-1/2">
             <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
