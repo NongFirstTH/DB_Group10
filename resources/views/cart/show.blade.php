@@ -144,10 +144,12 @@
 </section>
 
 <!-- Error Message -->
+@if(session('error'))
 <div class="fixed bottom-10 right-10 bg-red-500 text-white py-3 px-6 rounded-lg shadow-lg hidden"
   id="checkoutErrorMessage">
-  Checkout failed, Product out of stock!
+  {{ session('error') }}
 </div>
+@endif
 
 <script>
 let hideMessageTimeout = null;
