@@ -1,6 +1,6 @@
 @extends("layouts.layout")
     
-    <div class="flex justify-center items-center space-x-6 mt-14 mb-8">
+    <div class="flex justify-center items-center space-x-6 mt-20 mb-8">
         <!-- Food Card -->
         <div class="bg-white rounded-lg shadow-lg max-w-xs">
             <img src="https://img.freepik.com/free-vector/flat-adorable-pitbull-illustration_23-2148968106.jpg?t=st=1730189735~exp=1730193335~hmac=f8af6d5c559f929809494fa9178abccbeeea572dc1324a27ecd5ad4ea0f12053&w=740" class="rounded-t-lg">

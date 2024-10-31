@@ -8,7 +8,7 @@
 
           <!-- Product Image -->
           <div class="w-1/2">
-            <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-auto rounded-lg">
+            <img src="{{ $product->image }}" alt="{{ $product->product_name }}" class="w-full h-auto rounded-lg">
           </div>
 
           <!-- Product Details -->
@@ -21,10 +21,12 @@
             </div>
 
             <!-- Stock Availability -->
-            <div class="text-lg mt-2 {{ $product->quantity > 0 ? 'text-green-600' : 'text-red-600' }}">
+            <div class="text-lg mt-2 {{ $product->quantity > 0 ? 'text-orange-600' : 'text-red-600' }}">
               In Stock: {{ $product->quantity }} units
             </div>
 
+            
+           
             <!-- Add to Cart Form -->
             <form action="{{ route('cart.add') }}" method="POST" class="mt-4">
               @csrf
@@ -33,16 +35,15 @@
 
               <div class="flex items-center space-x-2">
                 <label for="quantity" class="text-lg">Quantity:</label>
-                <input type="number" name="quantity" id="quantity" value="1" min="0" max="{{ $product->quantity }}"
+                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->quantity }}"
                   class="border border-gray-300 rounded-md p-1 w-24 focus:ring-orange-400 focus:border-orange-400 transition duration-150 ease-in-out">
               </div>
 
-              <button button id="addToCartButton" type="submit" onclick="showAddToCartMessage({{ $product->id }})"
-                class=" mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 {{ $product->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
+              <button id="addToCartButton" type="submit"
+                class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 {{ $product->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                 {{ $product->quantity == 0 ? 'disabled' : '' }}>
                 Add to Cart
               </button>
-
             </form>
           </div>
 
@@ -56,37 +57,53 @@
             id="stockErrorMessage">
             Cannot add more than available stock!
           </div>
-          <!-- HTML -->
+
           <script>
-          let hideMessageTimeout = null; // Define a single timeout variable
+            let hideMessageTimeout = null;
 
-          function showAddToCartMessage() {
-            const message = document.getElementById('addToCartMessage');
+            function showAddToCartMessage() {
+              const message = document.getElementById('addToCartMessage');
+              message.classList.remove('hidden');
 
-            // Show the message instantly without CSS transitions
-            message.classList.remove('hidden');
+              if (hideMessageTimeout) {
+                clearTimeout(hideMessageTimeout);
+              }
 
-            // Clear any existing timeout so it won’t hide prematurely
-            if (hideMessageTimeout) {
-              clearTimeout(hideMessageTimeout);
+              hideMessageTimeout = setTimeout(() => {
+                message.classList.add('hidden');
+              }, 1000);
             }
 
-            // Set a new timeout to hide the message exactly 2 seconds later
-            hideMessageTimeout = setTimeout(() => {
-              message.classList.add('hidden');
-            }, 6000); // 2000 milliseconds = 2 seconds
-          }
+            function showStockErrorMessage() {
+              const message = document.getElementById('stockErrorMessage');
+              message.classList.remove('hidden');
+
+              if (hideMessageTimeout) {
+                clearTimeout(hideMessageTimeout);
+              }
+
+              hideMessageTimeout = setTimeout(() => {
+                message.classList.add('hidden');
+              }, 1000);
+            }
+
+            window.onload = function () {
+              const successMessage = "{{ session('success') }}";
+              const errorMessage = "{{ session('error') }}";
+
+              if (successMessage) {
+                showAddToCartMessage();
+              } else if (errorMessage) {
+                showStockErrorMessage();
+              }
+            };
           </script>
 
           <style>
-          /* Make sure the "hidden" class instantly hides the element with no transition */
-          #addToCartMessage.hidden {
-            display: none;
-          }
-
-          #addToCartMessage {
-            display: block;
-          }
+            #addToCartMessage.hidden,
+            #stockErrorMessage.hidden {
+              display: none;
+            }
           </style>
 
         </div>

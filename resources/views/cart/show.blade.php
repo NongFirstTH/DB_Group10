@@ -135,11 +135,7 @@
 
         <button id="checkout-button" type="submit"
           class="rounded-full w-full py-4 text-center bg-orange-600 font-semibold text-sm text-white flex justify-center items-center transition-all duration-300 hover:bg-orange-700">
-          Checkout
-          <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22">
-            <path d="M8.75324 5.49609L14.2535 10.9963L8.75 16.4998" stroke="white" stroke-width="1.6"
-              stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          CHECKOUT
         </button>
       </form>
       @endif
