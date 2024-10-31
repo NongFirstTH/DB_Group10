@@ -1,5 +1,3 @@
-<div class="min-h-screen w-full bg-gray-100">
-
     <h1 class="text-5xl font-bold text-center ">CATEGORIES</h1>
 
     <div class="flex justify-center items-center space-x-6 mt-14 mb-8 ">
@@ -33,4 +31,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -1,7 +1,6 @@
 @extends("layouts.layout")
 
 @section('content')
-<div class="min-h-screen w-full bg-gray-100">
   <div class="py-12 mt-14">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -62,7 +61,7 @@
                   message.classList.add('hidden');
                   // Proceed with form submission after showing message
                   event.target.submit();
-                }, 3000);
+                }, 1000);
               }
             </script>
 
@@ -70,5 +69,4 @@
       </div>
     </div>
   </div>
-</div>
 @endsection

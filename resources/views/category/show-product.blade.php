@@ -1,6 +1,4 @@
 @extends("layouts.layout")
-
-<div class="min-h-screen w-full bg-gray-100 mt-14">
     
     <div class="flex justify-center items-center space-x-6 mt-14 mb-8">
         <!-- Food Card -->
@@ -60,4 +58,3 @@
             @endif
         @endforeach
     </div>
-</div>

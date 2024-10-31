@@ -1,6 +1,5 @@
 @extends("layouts.layout")
 
-<div class="min-h-screen w-full bg-gray-100">
     <div class="py-12 mt-28 mb-4">
         <div class="max-w-7xl mx-auto grid grid-cols-12 gap-6">
             <!-- Left Sidebar -->
@@ -39,4 +38,3 @@
             </div>
         </div>
     </div>
-</div>

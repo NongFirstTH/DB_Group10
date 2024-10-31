@@ -1,5 +1,4 @@
 @extends("layouts.layout")
-<div class="min-h-screen flex bg-gray-100">
   <div class="mt-28 max-w-auto mx-auto max-h-l">
     <div class="bg-white shadow-md rounded-lg p-6 max-w-xl text-center">
       <h1 class="text-5xl font-bold text-center ">Your order has been placed successfully!</h1>
@@ -16,6 +15,5 @@
       <!-- </div> -->
     </div>
   </div>
-</div>
 </div>
 </div>
