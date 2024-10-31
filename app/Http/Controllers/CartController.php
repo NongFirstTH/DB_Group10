@@ -96,12 +96,12 @@ class CartController extends Controller
 
       // Check if the product exists
       if (!$product) {
-        return redirect()->route('cart')->with('error', 'Product not found: ' . $cartProduct['name']);
+        return redirect()->route('cart.show')->with('error', 'Product not found: ' . $cartProduct['name']);
       }
 
       // Check if ordered quantity exceeds stock
       if ($cartProduct['quantity'] > $product->quantity) {
-        return redirect()->route('cart')->with('error', 'Order failed! ' . $product->product_name . ' stock is not enough!');
+        return redirect()->route('cart.show')->with('error', 'Order failed! ' . $product->product_name . ' stock is not enough!');
       }
 
       OrderDetail::create([
@@ -122,18 +122,56 @@ class CartController extends Controller
     return view('order.confirmation');
   }
 
+  public function updateAll(Request $request)
+  {
+    $user = Auth::user();
+
+    $validatedData = $request->validate([
+      'subtotalAmount' => 'required|numeric',
+      'discountAmount' => 'required|numeric',
+      'totalAmount' => 'required|numeric',
+      'products' => 'required|array',
+    ]);
+
+    $products = $validatedData['products'];
+
+    foreach ($products as $product) {
+      $cartItem = Cart::where('user_id', $user->id)
+        ->where('product_name', $product['name'])
+        ->first();
+
+      if ($cartItem) {
+        $cartItem->quantity = $product['quantity'];
+        $cartItem->total_amount = $product['quantity'] * $cartItem->price;
+        $cartItem->save();
+      }
+    }
+
+    return view('cart.show', compact('cart', 'products', 'cartProducts', 'subtotal', 'discount'));
+  }
+
 
   public function update(Request $request, $id)
   {
     $item = Cart::find($id); // Find the cart item
 
-    // Handle quantity increase/decrease
+    // Validate input quantity
+    // If user is increasing or decreasing using buttons
     if ($request->action === 'increase') {
-      $item->quantity++;
+      if ($item->quantity >= $item->product->quantity) {
+        $item->quantity = $item->product->quantity;
+      } else {
+        $item->quantity++;
+      }
     } elseif ($request->action === 'decrease' && $item->quantity > 1) {
       $item->quantity--;
+    } else {
+      if ($request->quantity > $item->product->quantity) {
+        $item->quantity = $item->product->quantity;
+      } else {
+        $item->quantity = $request->quantity;
+      }
     }
-
     $item->save(); // Save changes to the database
 
     return redirect()->route('cart.show')->with('success', 'Cart updated successfully.');

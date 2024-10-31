@@ -41,6 +41,14 @@ class ProductController extends Controller
             ->where('product_id', $request->product_id)
             ->first();
 
+        $requestedQuantity = $request->quantity;
+        $currentCartQuantity = $cartItem ? $cartItem->quantity : 0;
+
+        if ($requestedQuantity + $currentCartQuantity > $product->quantity) {
+            // If the requested quantity exceeds the available quantity, return an error
+            return view('product.show', compact('product'))->with('error', 'Requested quantity exceeds available quantity');
+        }
+
         if ($cartItem) {
             // If the product is already in the cart, increase the quantity
             $cartItem->quantity += $request->quantity;
@@ -49,15 +57,15 @@ class ProductController extends Controller
         } else {
             // If the product is not in the cart, create a new cart item
             $totalAmount = $product->price * $request->quantity;
-            
+
             Cart::create([
                 'user_id' => $user->id,
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
-                'total_amount' =>  $totalAmount,
+                'total_amount' => $totalAmount,
             ]);
         }
 
-        return view('product.show', compact('product'));
+        return view('product.show', compact('product'))->with('success', 'Product added to cart successfully');
     }
 }

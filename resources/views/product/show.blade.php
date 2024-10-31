@@ -26,44 +26,68 @@
             </div>
 
             <!-- Add to Cart Form -->
-            <form action="{{ route('cart.add') }}" method="POST" class="mt-4" onsubmit="showAddToCartMessage(event)">
+            <form action="{{ route('cart.add') }}" method="POST" class="mt-4">
               @csrf
               <input type="hidden" name="product_id" value="{{ $product->id }}">
               <input type="hidden" name="price" value="{{ $product->price }}">
 
               <div class="flex items-center space-x-2">
                 <label for="quantity" class="text-lg">Quantity:</label>
-                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{ $product->quantity }}"
+                <input type="number" name="quantity" id="quantity" value="1" min="0" max="{{ $product->quantity }}"
                   class="border border-gray-300 rounded-md p-1 w-24 focus:ring-orange-400 focus:border-orange-400 transition duration-150 ease-in-out">
               </div>
 
-              <button type="submit"
-                class="mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 {{ $product->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
+              <button button id="addToCartButton" type="submit" onclick="showAddToCartMessage({{ $product->id }})"
+                class=" mt-4 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 {{ $product->quantity == 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                 {{ $product->quantity == 0 ? 'disabled' : '' }}>
                 Add to Cart
               </button>
+
             </form>
           </div>
 
-          <!-- Add to Cart Confirmation Modal --> 
-           <div id="addToCartMessage" class="fixed bottom-10 right-10 bg-green-500 text-white py-2 px-4 rounded-lg shadow-lg hidden"> 
-            Added to cart! 
-           </div>
+          <!-- Success and Error Messages -->
+          <div class="fixed bottom-10 right-10 bg-green-500 text-white py-3 px-6 rounded-lg shadow-lg hidden"
+            id="addToCartMessage">
+            Added to cart!
+          </div>
 
-            <script>
-              function showAddToCartMessage(event) {
-                event.preventDefault(); // Prevent form submission to show message first
-                const message = document.getElementById('addToCartMessage');
-                // Show the message
-                message.classList.remove('hidden');
-                // Hide the message after 3 seconds
-                setTimeout(() => {
-                  message.classList.add('hidden');
-                  // Proceed with form submission after showing message
-                  event.target.submit();
-                }, 1000);
-              }
-            </script>
+          <div class="fixed bottom-10 right-10 bg-red-500 text-white py-3 px-6 rounded-lg shadow-lg hidden"
+            id="stockErrorMessage">
+            Cannot add more than available stock!
+          </div>
+          <!-- HTML -->
+          <script>
+          let hideMessageTimeout = null; // Define a single timeout variable
+
+          function showAddToCartMessage() {
+            const message = document.getElementById('addToCartMessage');
+
+            // Show the message instantly without CSS transitions
+            message.classList.remove('hidden');
+
+            // Clear any existing timeout so it won’t hide prematurely
+            if (hideMessageTimeout) {
+              clearTimeout(hideMessageTimeout);
+            }
+
+            // Set a new timeout to hide the message exactly 2 seconds later
+            hideMessageTimeout = setTimeout(() => {
+              message.classList.add('hidden');
+            }, 2000); // 2000 milliseconds = 2 seconds
+          }
+          </script>
+
+          <style>
+          /* Make sure the "hidden" class instantly hides the element with no transition */
+          #addToCartMessage.hidden {
+            display: none;
+          }
+
+          #addToCartMessage {
+            display: block;
+          }
+          </style>
 
         </div>
       </div>
