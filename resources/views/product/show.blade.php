@@ -74,7 +74,7 @@
             // Set a new timeout to hide the message exactly 2 seconds later
             hideMessageTimeout = setTimeout(() => {
               message.classList.add('hidden');
-            }, 2000); // 2000 milliseconds = 2 seconds
+            }, 6000); // 2000 milliseconds = 2 seconds
           }
           </script>
 
