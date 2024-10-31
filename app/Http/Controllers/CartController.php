@@ -125,21 +125,30 @@ class CartController extends Controller
       if ($item->quantity >= $item->product->quantity) {
         $item->quantity = $item->product->quantity;
         $item->save();
-        return redirect()->route('cart.show')->with('error', 'Quantity exceeds stock.');
+        return redirect()->route('cart.show')->with('error', 'Quantity exceeds stock: ' . $item->product->quantity);
       }
       $item->quantity++;
 
-    } elseif ($request->action === 'decrease' && $item->quantity > 1) {
+    } elseif ($request->action === 'decrease') {
+      if ($item->quantity <= 1) {
+        $item->quantity = 1;
+        $item->save();
+        return redirect()->route('cart.show')->with('error', 'Quantity cannot be less than 1');
+      }
       $item->quantity--;
     } else {
-      if ($request->quantity > $item->product->quantity) {
+      // check if requested quantity is not a number
+      if (!is_numeric($request->quantity)) {
+        return redirect()->route('cart.show')->with('error', 'Only numbers are allowed');
+      } else if ($request->quantity > $item->product->quantity) {
         $item->quantity = $item->product->quantity;
         $item->save();
-        return redirect()->route('cart.show')->with('error', 'Quantity exceeds stock.');
+        return redirect()->route('cart.show')->with('error', 'Quantity exceeds stock');
+      } else if ($request->quantity < 1) {
+        $item->quantity = 1;
+      } else {
+        $item->quantity = $request->quantity;
       }
-
-      $item->quantity = $request->quantity;
-
     }
     $item->save(); // Save changes to the database
 

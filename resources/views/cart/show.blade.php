@@ -186,10 +186,50 @@ window.onload = function() {
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/b`ootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
+
 <script>
 $(document).ready(function() {
-  $(".quantity-input").on("change", function() {
-    $(this).closest("form").submit();
+  // Automatically hide the error message after 5 seconds
+  if ($("#checkoutErrorMessage").length) {
+    $("#checkoutErrorMessage").removeClass("hidden").fadeIn().delay(3000).fadeOut();
+  }
+});
+</script>
+
+<script>
+$(document).ready(function() {
+  $(".quantity-input").on("change keyup", function(e) {
+    const input = $(this);
+    const min = parseInt(input.attr("min")) || 1;
+    const max = parseInt(input.attr("max")) || Infinity;
+    const value = parseInt(input.val());
+
+    if (isNaN(value)) {
+      // Reset to min if not a number
+      input.val(0);
+    } else if (value >= min && value <= max) {
+      // Submit form on Enter key press or change
+      if ((e.type === "keyup" && e.key === "Enter") || e.type === "change") {
+        input.closest("form").submit();
+      }
+    } else { // Case Exceed Max or Min
+      // Reset to min or max if out of range
+      input.val(Math.max(min, Math.min(value, max)));
+
+      // Show custom error message
+      $("#checkoutErrorMessage").removeClass("hidden").fadeIn();
+    }
   });
+});
+</script>
+
+<script>
+// Handle nothing in input box or if its not number
+document.getElementById('quantity').addEventListener('input', function(event) {
+  const input = event.target;
+  // Set default to 1 if the input is left empty
+  if (input.value === '') {
+    input.value = 1;
+  }
 });
 </script>
