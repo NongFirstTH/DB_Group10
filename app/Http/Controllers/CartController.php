@@ -29,6 +29,7 @@ class CartController extends Controller
         'users.username as user_name',
         'products.image',
         'products.product_name',
+        'products.id',
         'products.price',
         'products.quantity as stock',
         DB::raw('products.price * carts.quantity as total_amount')
@@ -64,7 +65,7 @@ class CartController extends Controller
     $products = $validatedData['products'];
 
     foreach ($products as $cartProduct) {
-      $product = DB::table('products')->where('product_name', $cartProduct['name'])->first();
+      $product = DB::table('products')->where('id', $cartProduct['id'])->first();
 
       // Check if the product exists
       if (!$product) {
@@ -89,7 +90,7 @@ class CartController extends Controller
     $order_id = $order->id;
 
     foreach ($products as $cartProduct) {
-      $product = DB::table('products')->where('product_name', $cartProduct['name'])->first();
+      $product = DB::table('products')->where('id', $cartProduct['id'])->first();
 
       // Skip added to order_detail if quantity is 0
       if ($cartProduct['quantity'] == 0) {

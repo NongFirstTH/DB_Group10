@@ -129,6 +129,7 @@
         <!-- Pass products as an array with name, quantity, and price -->
         @foreach($cartProducts as $item)
         <input type="hidden" name="products[{{ $loop->index }}][name]" value="{{ $item->product_name }}">
+        <input type="hidden" name="products[{{ $loop->index }}][id]" value="{{ $item->id }}">
         <input type="hidden" name="products[{{ $loop->index }}][quantity]" value="{{ $item->quantity }}">
         <input type="hidden" name="products[{{ $loop->index }}][price]" value="{{ $item->price }}">
         @endforeach
@@ -165,7 +166,7 @@ function showCheckoutErrorMsg() {
 
   hideMessageTimeout = setTimeout(() => {
     message.classList.add('hidden');
-  }, 1000);
+  }, 3000);
 }
 
 window.onload = function() {

@@ -103,7 +103,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'category_id' => 2,
-                'product_name' => 'Pet Munchies Sushi Dog Training Treats 50g',
+                'product_name' => 'Kong Classic Dog Toy',
                 'description' => 'Mentally stimulating toy; offering enrichment by helping satisfy dogs instinctual needs Unpredictable bounce for games of fetch Recommended by veterinarians and trainers worldwide Natural rubber',
                 'price' => 340,
                 'quantity' => 150,
