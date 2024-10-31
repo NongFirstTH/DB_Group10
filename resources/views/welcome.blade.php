@@ -2,7 +2,6 @@
 
 @section("content")
 
-<div class="min-h-screen w-full bg-gray-100 mt-14">
 <div class="flex flex-col items-center bg-white-100 mb-5 p-8 rounded-lg  max-w-lg mx-auto">
 
     <!-- Title -->
@@ -24,6 +23,5 @@
     <a href="{{url('/category')}}" class="inline-block bg-orange-500 text-white font-bold pt-3 py-4 px-6 mt-5 rounded hover:bg-orange-600 transition text-center">
                             shop now
     </a>
-</div>
 </div>
 @endsection

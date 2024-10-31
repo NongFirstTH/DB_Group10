@@ -1,4 +1,3 @@
-
 @extends("layouts.layout")
 
 <!-- Login Form -->
@@ -31,6 +30,12 @@
             <input id="password" name="password" type="password" class="mt-1 block w-full border border-gray-300 p-2 rounded-md transition duration-200 ease-in-out focus:border-orange-500 focus:ring focus:ring-orange-500 hover:border-orange-500" required>
         </div>
 
+        <!-- Show Password Checkbox -->
+        <div class="flex items-center mt-2">
+            <input id="show-password" type="checkbox" onclick="togglePasswordVisibility()" class="mr-2">
+            <label for="show-password" class="text-gray-600">Show Password</label>
+        </div>
+
         <!-- Login Button -->
         <div class="flex justify-center mt-6">
             <button type="submit" class="bg-gray-700 text-white px-6 py-3 rounded-md hover:bg-gray-800">
@@ -46,3 +51,10 @@
         </div>
     </form>
 </div>
+
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById("password");
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        }
+    </script>

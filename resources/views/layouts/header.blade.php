@@ -16,9 +16,9 @@
 <style>
 
 </style>
-<!-- class="flex flex-col min-h-screen bg-gradient-to-t from-blue-200 to-cyan-300 bg-no-repeat" -->
+<!-- class="flex flex-col min-h-screen" -->
 <body 
-class="flex flex-col min-h-screen"
+class="flex flex-col min-h-screen bg-gradient-to-t from-gray-100 to-gray-50 bg-no-repeat"
     >
                 <header>
                 @include("layouts.navigation") 

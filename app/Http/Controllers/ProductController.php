@@ -21,8 +21,13 @@ class ProductController extends Controller
             return view('errors.product_not_found');
         }
 
+        // Get the cart quantity for the current user
+        $cartQuantity = Cart::where('user_id', auth()->id())
+            ->where('product_id', $id)
+            ->sum('quantity');
+
         // Product exists, so render the product page
-        return view('product.show', compact('product'));
+        return view('product.show', compact('product', 'cartQuantity'));
     }
 
     public function addToCart(Request $request)
@@ -41,23 +46,31 @@ class ProductController extends Controller
             ->where('product_id', $request->product_id)
             ->first();
 
+        $requestedQuantity = $request->quantity;
+        $currentCartQuantity = $cartItem ? $cartItem->quantity : 0;
+
+        if ($requestedQuantity + $currentCartQuantity > $product->quantity) {
+            // If the requested quantity exceeds the available quantity, return an error message
+            return redirect()->route('product.show', $product->id)->with('error', 'Requested quantity exceeds available quantity');
+        }
+
         if ($cartItem) {
             // If the product is already in the cart, increase the quantity
-            $cartItem->quantity += $request->quantity;
+            $cartItem->quantity += $requestedQuantity;
             $cartItem->total_amount = $cartItem->quantity * $product->price;
             $cartItem->save();
         } else {
             // If the product is not in the cart, create a new cart item
-            $totalAmount = $product->price * $request->quantity;
-            
+            $totalAmount = $product->price * $requestedQuantity;
+
             Cart::create([
                 'user_id' => $user->id,
                 'product_id' => $request->product_id,
-                'quantity' => $request->quantity,
-                'total_amount' =>  $totalAmount,
+                'quantity' => $requestedQuantity,
+                'total_amount' => $totalAmount,
             ]);
         }
 
-        return view('product.show', compact('product'));
+        return redirect()->route('product.show', $product->id)->with('success', 'Product added to cart successfully');
     }
 }
