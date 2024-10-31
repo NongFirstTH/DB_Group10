@@ -124,17 +124,22 @@ class CartController extends Controller
     if ($request->action === 'increase') {
       if ($item->quantity >= $item->product->quantity) {
         $item->quantity = $item->product->quantity;
-      } else {
-        $item->quantity++;
+        $item->save();
+        return redirect()->route('cart.show')->with('error', 'Quantity exceeds stock.');
       }
+      $item->quantity++;
+
     } elseif ($request->action === 'decrease' && $item->quantity > 1) {
       $item->quantity--;
     } else {
       if ($request->quantity > $item->product->quantity) {
         $item->quantity = $item->product->quantity;
-      } else {
-        $item->quantity = $request->quantity;
+        $item->save();
+        return redirect()->route('cart.show')->with('error', 'Quantity exceeds stock.');
       }
+
+      $item->quantity = $request->quantity;
+
     }
     $item->save(); // Save changes to the database
 
