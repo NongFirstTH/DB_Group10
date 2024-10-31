@@ -91,6 +91,11 @@ class CartController extends Controller
     foreach ($products as $cartProduct) {
       $product = DB::table('products')->where('product_name', $cartProduct['name'])->first();
 
+      // Skip added to order_detail if quantity is 0
+      if ($cartProduct['quantity'] == 0) {
+        continue;
+      }
+
       OrderDetail::create([
         'order_id' => $order_id,
         'product_id' => $product->id,
