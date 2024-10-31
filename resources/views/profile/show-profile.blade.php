@@ -1,69 +1,68 @@
 @extends("layouts.layout")
 <div class="py-12 mt-28 mb-4">
-    <div class="max-w-7xl mx-auto grid grid-cols-12 gap-6"
-        x-data="{ openProfile: false, openPhoto: false, showInfo: true }">
-        <!-- Left Sidebar -->
-        <div class="col-span-12 lg:col-span-3 space-y-6">
-            <div class="bg-white shadow-md rounded-lg p-6">
-                <div class="text-center mb-4 relative">
-                    <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="Profile Photo"
-                        class="w-28 h-28 rounded-full mx-auto object-cover shadow-md mb-4">
-                    <h3 class="text-2xl font-bold mb-2">{{ Auth::user()->username }}</h3>
-                </div>
-                <ul class="space-y-4">
-                    <li><a href="{{ route('profile.show-profile') }}"
-                            class="block text-orange-600 font-semibold">Account
-                            Overview</a></li>
-                    <li><a href="{{ route('profile.show-order') }}" class="block hover:text-orange-600">My
-                            Orders</a></li>
-                    <li><a href="{{ route('profile.update.password') }}" class="block hover:text-orange-600">Change
-                            Password</a></li>
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}" id="logout-form" class="inline">
-                            @csrf
-                            <a href="#" class="block text-red-600 hover:text-orange-600"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Log Out') }}
-                            </a>
-                        </form>
-                    </li>
-                </ul>
-            </div>
+  <div class="max-w-7xl mx-auto grid grid-cols-12 gap-6"
+    x-data="{ openProfile: false, openPhoto: false, showInfo: true }">
+    <!-- Left Sidebar -->
+    <div class="col-span-12 lg:col-span-3 space-y-6">
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="text-center mb-4 relative">
+          <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="Profile Photo"
+            class="w-28 h-28 rounded-full mx-auto object-cover shadow-md mb-4">
+          <h3 class="text-2xl font-bold mb-2">{{ Auth::user()->username }}</h3>
         </div>
-
-        <!-- Center Content Area -->
-        <div class="col-span-12 lg:col-span-9 ">
-            <div class="bg-white shadow-lg rounded-lg p-6">
-                <h3 class="text-xl font-semibold mb-4 text-orange-600">Account Overview</h3>
-                <p class="text-gray-800 text-lg">Welcome back, <span
-                        class="font-bold text-gray-900">{{ Auth::user()->firstname }}
-                        {{ Auth::user()->lastname }}</span>!</p>
-
-                <!-- User Information -->
-                <div x-show="showInfo" id="profileInfo" class="mt-4">
-                    <h4 class="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-4">Your
-                        Information:</h4>
-                    <ul class="list-disc list-inside mt-2 text-gray-700 space-y-2">
-                        <li class="flex justify-between font-bold"><span>Email:</span><span
-                                class="font-medium text-gray-800">{{ Auth::user()->email }}</span></li>
-                        <li class="flex justify-between font-bold"><span>Joined on:</span><span
-                                class="font-medium text-gray-800">{{ Auth::user()->created_at->format('F j, Y') }}</span>
-                        </li>
-                        <li class="flex justify-between font-bold"><span>Location:</span><span
-                                class="font-medium text-gray-800">{{ Auth::user()->location }}</span></li>
-                        <li class="flex justify-between font-bold"><span>Phone Number:</span><span
-                                class="font-medium text-gray-800">{{ Auth::user()->phone_number }}</span></li>
-                    </ul>
-                </div>
-
-                <!-- Navigation links in your main layout -->
-                <div class="flex space-x-4 mt-4">
-                    <a href="{{ route('profile.edit') }}"
-                        class="text-white px-4 py-2 rounded-md bg-[#654520] hover:bg-[#825B32]">Edit Profile</a>
-                    <a href="{{ route('profile.edit.photo') }}"
-                        class="text-white px-4 py-2 rounded-md bg-orange-500 hover:bg-[#FF8343]">Edit Photo</a>
-                </div>
-            </div>
-        </div>
+        <ul class="space-y-4">
+          <li><a href="{{ route('profile.show-profile') }}" class="block text-orange-600 font-semibold">Account
+              Overview</a></li>
+          <li><a href="{{ route('profile.show-order') }}" class="block hover:text-orange-600">My
+              Orders</a></li>
+          <li><a href="{{ route('profile.update.password') }}" class="block hover:text-orange-600">Change
+              Password</a></li>
+          <li>
+            <form method="POST" action="{{ route('logout') }}" id="logout-form" class="inline">
+              @csrf
+              <a href="#" class="block text-red-600 hover:text-orange-600"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                {{ __('Log Out') }}
+              </a>
+            </form>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <!-- Center Content Area -->
+    <div class="col-span-12 lg:col-span-9 ">
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-xl font-semibold mb-4 text-orange-600">Account Overview</h3>
+        <p class="text-gray-800 text-lg">Welcome back, <span
+            class="font-bold text-gray-900">{{ Auth::user()->firstname }}
+            {{ Auth::user()->lastname }}</span>!</p>
+
+        <!-- User Information -->
+        <div x-show="showInfo" id="profileInfo" class="mt-4">
+          <h4 class="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-4">Your
+            Information:</h4>
+          <ul class="list-disc list-inside mt-2 text-gray-700 space-y-2">
+            <li class="flex justify-between font-bold"><span>Email:</span><span
+                class="font-medium text-gray-800">{{ Auth::user()->email }}</span></li>
+            <li class="flex justify-between font-bold"><span>Joined on:</span><span
+                class="font-medium text-gray-800">{{ Auth::user()->created_at->format('F j, Y') }}</span>
+            </li>
+            <li class="flex justify-between font-bold"><span>Location:</span><span
+                class="font-medium text-gray-800">{{ Auth::user()->location }}</span></li>
+            <li class="flex justify-between font-bold"><span>Phone Number:</span><span
+                class="font-medium text-gray-800">{{ Auth::user()->phone_number }}</span></li>
+          </ul>
+        </div>
+
+        <!-- Navigation links in your main layout -->
+        <div class="flex space-x-4 mt-4">
+          <a href="{{ route('profile.edit') }}"
+            class="text-white px-4 py-2 rounded-md bg-[#654520] hover:bg-[#825B32]">Edit Profile</a>
+          <a href="{{ route('profile.edit.photo') }}"
+            class="text-white px-4 py-2 rounded-md bg-orange-500 hover:bg-[#FF8343]">Edit Photo</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
