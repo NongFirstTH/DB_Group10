@@ -58,27 +58,24 @@ class CartController extends Controller
       'products' => 'required|array',
     ]);
 
-    // Fetch the cart products for the authenticated user
-    $cartProducts = DB::table('carts')
-      ->join('products', 'carts.product_id', '=', 'products.id')
-      ->join('users', 'carts.user_id', '=', 'users.id')
-      ->join('categories', 'products.category_id', '=', 'categories.id')
-      ->select(
-        'carts.*',
-        'categories.category_name',
-        'users.username as user_name',
-        'products.image',
-        'products.product_name',
-        'products.price',
-        DB::raw('products.price * carts.quantity as total_amount')
-      )
-      ->where('carts.user_id', $user->id)
-      ->get();
-
     $subtotal = $validatedData['subtotalAmount'];
     $discount = $validatedData['discountAmount'];
     $total = $validatedData['totalAmount'];
     $products = $validatedData['products'];
+
+    foreach ($products as $cartProduct) {
+      $product = DB::table('products')->where('product_name', $cartProduct['name'])->first();
+
+      // Check if the product exists
+      if (!$product) {
+        return redirect()->route('cart.show')->with('error', 'Product not found: ' . $cartProduct['name']);
+      }
+
+      // Check if ordered quantity exceeds stock
+      if ($cartProduct['quantity'] > $product->quantity) {
+        return redirect()->route('cart.show')->with('error', 'Order failed! ' . $product->product_name . ' stock is not enough!');
+      }
+    }
 
     // Create a new order
     $order = Order::create([
@@ -93,16 +90,6 @@ class CartController extends Controller
 
     foreach ($products as $cartProduct) {
       $product = DB::table('products')->where('product_name', $cartProduct['name'])->first();
-
-      // Check if the product exists
-      if (!$product) {
-        return redirect()->route('cart.show')->with('error', 'Product not found: ' . $cartProduct['name']);
-      }
-
-      // Check if ordered quantity exceeds stock
-      if ($cartProduct['quantity'] > $product->quantity) {
-        return redirect()->route('cart.show')->with('error', 'Order failed! ' . $product->product_name . ' stock is not enough!');
-      }
 
       OrderDetail::create([
         'order_id' => $order_id,
@@ -120,36 +107,8 @@ class CartController extends Controller
     Cart::where('user_id', $user->id)->delete();
 
     return view('order.confirmation');
+    // return redirect()->route('cart.show')->with('success', 'Checkout Succesfully!');
   }
-
-  public function updateAll(Request $request)
-  {
-    $user = Auth::user();
-
-    $validatedData = $request->validate([
-      'subtotalAmount' => 'required|numeric',
-      'discountAmount' => 'required|numeric',
-      'totalAmount' => 'required|numeric',
-      'products' => 'required|array',
-    ]);
-
-    $products = $validatedData['products'];
-
-    foreach ($products as $product) {
-      $cartItem = Cart::where('user_id', $user->id)
-        ->where('product_name', $product['name'])
-        ->first();
-
-      if ($cartItem) {
-        $cartItem->quantity = $product['quantity'];
-        $cartItem->total_amount = $product['quantity'] * $cartItem->price;
-        $cartItem->save();
-      }
-    }
-
-    return view('cart.show', compact('cart', 'products', 'cartProducts', 'subtotal', 'discount'));
-  }
-
 
   public function update(Request $request, $id)
   {

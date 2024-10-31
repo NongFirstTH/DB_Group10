@@ -143,6 +143,43 @@
   </div>
 </section>
 
+<!-- Error Message -->
+<div class="fixed bottom-10 right-10 bg-red-500 text-white py-3 px-6 rounded-lg shadow-lg hidden"
+  id="checkoutErrorMessage">
+  Checkout failed, Product out of stock!
+</div>
+
+<script>
+let hideMessageTimeout = null;
+
+function showCheckoutErrorMsg() {
+
+  const message = document.getElementById('checkoutErrorMessage');
+  message.classList.remove('hidden');
+
+  if (hideMessageTimeout) {
+    clearTimeout(hideMessageTimeout);
+  }
+
+  hideMessageTimeout = setTimeout(() => {
+    message.classList.add('hidden');
+  }, 1000);
+}
+
+window.onload = function() {
+  const errorMessage = "{{session('error')}}";
+  if (errorMessage) {
+    showCheckoutErrorMsg();
+  }
+};
+</script>
+
+<style>
+#checkoutErrorMessage.hidden {
+  display: none;
+}
+</style>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/b`ootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
